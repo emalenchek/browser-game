@@ -7,9 +7,9 @@ window.onload = () => {
             health: 50,
             move: 5,
             attack: 10,
-            xCord: 30,
+            xCord: 0,
             yCord: 0,
-            initialXCord: 30,
+            initialXCord: 0,
             initialYCord: 0,
             intersecting: false,
             selected: false
@@ -36,8 +36,8 @@ window.onload = () => {
     }
 
     function moveShip() {
-        ships.playerShip.xCord = xCord - ships.playerShip.initialXCord;
-        ships.playerShip.yCord = yCord - ships.playerShip.initialYCord;
+        ships.playerShip.xCord = xCord;
+        ships.playerShip.yCord = yCord;
         placeShip();
     }
 
@@ -111,6 +111,7 @@ window.onload = () => {
                     if(ships.playerShip.selected === true) {
                         moveShip();
                         ships.playerShip.selected = false;
+                        ships.playerShip.intersecting = true;
                     } else {
                         // Open game menu
                     }

@@ -65,7 +65,7 @@ body {
 
 .cursor {
     display: block;
-    position: relative;
+    position: absolute;
     background-color: transparent;
     border: 1px dashed white;
     width: 30px;
