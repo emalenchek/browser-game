@@ -12,12 +12,18 @@ window.onload = () => {
             initialXCord: 0,
             initialYCord: 0,
             intersecting: false,
-            selected: false
+            selected: false,
+            orientation: "north",
+            lastMoveDirection: "",
+            degreeOfOrientation: 0
         },
         enemyShip: {
             health: 10,
             move: 2,
-            attack: 10
+            attack: 10,
+            orientation: "south",
+            lastMoveDirection: "",
+            degreeOfOrientation: 0
         }
     }
 
@@ -30,8 +36,31 @@ window.onload = () => {
         }
     }
 
+    function setOrientation(cardinalDirection) {
+        switch(cardinalDirection) {
+            case "north":
+                ships.playerShip.orientation = "north";
+                ships.playerShip.degreeOfOrientation = 0;
+                break;
+            case "east":
+                ships.playerShip.orientation = "east";
+                ships.playerShip.degreeOfOrientation = 90;
+                break;
+            case "south":
+                ships.playerShip.orientation = "south";
+                ships.playerShip.degreeOfOrientation = 180;
+                break;
+            case "west":
+                ships.playerShip.orientation = "west";
+                ships.playerShip.degreeOfOrientation = 270;
+                break;
+            default:
+                break;
+        };
+    }
+
     function placeShip() {
-        document.querySelector('.player-ship').style.transform = "translate(" + ships.playerShip.xCord + "px, " + ships.playerShip.yCord + "px)";
+        document.querySelector('.player-ship').style.transform = "translate(" + ships.playerShip.xCord + "px, " + ships.playerShip.yCord + "px) rotate(" + ships.playerShip.degreeOfOrientation + "deg)";
         console.log(`Ship Cords: ${ships.playerShip.xCord}, ${ships.playerShip.yCord} `);
     }
 
@@ -56,7 +85,7 @@ window.onload = () => {
                     yCord -= 30;
                 document.querySelector('.cursor').style.transform = "translate(" + xCord + "px, " + yCord + "px)";
                 console.log(xCord + ' ' + yCord);
-
+                ships.playerShip.lastMoveDirection = "north";
                 checkIntersect();
 
                 break;
@@ -68,7 +97,7 @@ window.onload = () => {
                     xCord -= 30;
                 document.querySelector('.cursor').style.transform = "translate(" + xCord + "px, " + yCord + "px)";
                 console.log(xCord + ' ' + yCord);
-
+                ships.playerShip.lastMoveDirection = "west";
                 checkIntersect();
 
 
@@ -81,7 +110,7 @@ window.onload = () => {
                     yCord += 30;
                 document.querySelector('.cursor').style.transform = "translate(" + xCord + "px, " + yCord + "px)";
                 console.log(xCord + ' ' + yCord);
-
+                ships.playerShip.lastMoveDirection = "south";
                 checkIntersect();
 
 
@@ -94,7 +123,7 @@ window.onload = () => {
                     xCord += 30;
                 document.querySelector('.cursor').style.transform = "translate(" + xCord + "px, " + yCord + "px)";
                 console.log(xCord + ' ' + yCord);
-
+                ships.playerShip.lastMoveDirection = "east";
                 checkIntersect();
 
 
@@ -104,14 +133,21 @@ window.onload = () => {
                 if(ships.playerShip.intersecting === true) {
                     if(ships.playerShip.selected === false) {
                         ships.playerShip.selected = true;
+                        console.log("Intersecting: " + ships.playerShip.intersecting);
+                        console.log("Selected: " + ships.playerShip.selected);
                     } else {
                         ships.playerShip.selected = false;
+                        console.log("Intersecting: " + ships.playerShip.intersecting);
+                        console.log("Selected: " + ships.playerShip.selected);
                     }
                 } else {
                     if(ships.playerShip.selected === true) {
+                        setOrientation(ships.playerShip.lastMoveDirection);
                         moveShip();
                         ships.playerShip.selected = false;
                         ships.playerShip.intersecting = true;
+                        console.log("Intersecting: " + ships.playerShip.intersecting);
+                        console.log("Selected: " + ships.playerShip.selected);
                     } else {
                         // Open game menu
                     }
