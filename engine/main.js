@@ -99,7 +99,7 @@ window.onload = () => {
 
     placeEnemyShipStart(); 
 
-    window.addEventListener("keypress", (event) => {
+    window.addEventListener("keydown", (event) => {
         if(event.defaultPrevented) {
             return;
         }
