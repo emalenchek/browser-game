@@ -74,7 +74,15 @@ body {
 
 .player-ship {
     display: block;
-    position: relative;
+    position: absolute;
+    background-image: url('media/spacepixels-0.2.0/pixel_ship.png');
+    width: 30px;
+    height: 30px;
+}
+
+.enemy-ship {
+    display: block;
+    position: absolute;
     background-image: url('media/spacepixels-0.2.0/pixel_ship.png');
     width: 30px;
     height: 30px;

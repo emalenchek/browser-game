@@ -15,17 +15,25 @@ window.onload = () => {
             selected: false,
             orientation: "north",
             lastMoveDirection: "",
-            degreeOfOrientation: 0
+            degreeOfOrientation: 0,
+            transform: ""
         },
         enemyShip: {
             health: 10,
             move: 2,
             attack: 10,
+            xCord: 90,
+            yCord: -120,
+            initialXCord: 90,
+            initialYCord: -120,
             orientation: "south",
             lastMoveDirection: "",
-            degreeOfOrientation: 0
+            degreeOfOrientation: 180,
+            transform: ""
         }
     }
+
+    /* Player Ship Functions - Probably need to place them within the above JSON for legibility */
 
     function checkIntersect() {
         if(xCord === ships.playerShip.xCord && yCord === ships.playerShip.yCord) {
@@ -60,8 +68,9 @@ window.onload = () => {
     }
 
     function placeShip() {
-        document.querySelector('.player-ship').style.transform = "translate(" + ships.playerShip.xCord + "px, " + ships.playerShip.yCord + "px) rotate(" + ships.playerShip.degreeOfOrientation + "deg)";
-        console.log(`Ship Cords: ${ships.playerShip.xCord}, ${ships.playerShip.yCord} `);
+        ships.playerShip.transform = "translate(" + ships.playerShip.xCord + "px, " + ships.playerShip.yCord + "px) rotate(" + ships.playerShip.degreeOfOrientation + "deg)";
+        document.querySelector('.player-ship').style.transform = ships.playerShip.transform;
+        console.log(`Player Ship Cords: ${ships.playerShip.xCord}, ${ships.playerShip.yCord} `);
     }
 
     function moveShip() {
@@ -69,6 +78,20 @@ window.onload = () => {
         ships.playerShip.yCord = yCord;
         placeShip();
     }
+
+    /* Enemy Ship Functions - Probably need to place them within the above JSON for legibility */
+
+    function placeEnemyShipStart() {
+        ships.enemyShip.transform = "translate(" + ships.enemyShip.initialXCord + "px, " + ships.enemyShip.initialYCord + "px) rotate(" + ships.enemyShip.degreeOfOrientation + "deg)";
+        document.querySelector('.enemy-ship').style.transform = ships.enemyShip.transform;
+        console.log(`Enemy Ship Cords: ${ships.enemyShip.xCord}, ${ships.enemyShip.yCord} `);
+    }
+
+
+
+    /* The "MAIN" */
+
+    placeEnemyShipStart(); 
 
     window.addEventListener("keypress", (event) => {
         if(event.defaultPrevented) {
