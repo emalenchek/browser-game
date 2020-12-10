@@ -74,9 +74,15 @@ window.onload = () => {
     }
 
     function moveShip() {
-        ships.playerShip.xCord = xCord;
-        ships.playerShip.yCord = yCord;
-        placeShip();
+        if((ships.playerShip.move * 30) >= Math.sqrt(Math.pow((ships.playerShip.initialXCord - xCord), 2) + Math.pow((ships.playerShip.initialYCord - yCord), 2))) {
+            ships.playerShip.initialXCord = xCord;
+            ships.playerShip.xCord = xCord;
+            ships.playerShip.initialYCord = yCord;
+            ships.playerShip.yCord = yCord;
+            placeShip();
+        } else {
+            console.log("Can't move that far");
+        }
     }
 
     /* Enemy Ship Functions - Probably need to place them within the above JSON for legibility */
