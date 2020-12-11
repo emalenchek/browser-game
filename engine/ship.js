@@ -24,7 +24,7 @@ class Ship {
         }
 
         if(this.destroyed) {
-            this.destroyShip;
+            this.destroyShip();
         }
     }
 
@@ -74,7 +74,7 @@ class Ship {
                 
                 console.log(this.transform);               
                 this.deathSpins--;
-                destroyEnemyShip(this.deathSpins); 
+                this.destroyShip(); 
             } else {
                 document.querySelector('.enemy-ship').remove();
                 this.deathSpins = 4;
@@ -110,7 +110,7 @@ class Ship {
             if(cursor.intersectingWith.xCord === cursor.xCord && cursor.intersectingWith.yCord === cursor.yCord) {
                 console.log("This coordinate is occupied by an enemy.");
                 // if target ship is within range attack target
-                if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - xCord), 2) + Math.pow((this.initialYCord - yCord), 2))) {
+                if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
                     this.shipAttack(cursor.intersectingWith);
                 }
             } else {
@@ -127,7 +127,7 @@ class Ship {
 
     shipAttack(target) {
         target.health -= this.attack;
-    
+        target.handleStatus();
         if(target.team === "enemy") {
             console.log("Enemy Ship Remaining Health: " + target.health);
         } else if(target.team === "player") {
@@ -151,6 +151,7 @@ class EnemyShip extends Ship {
         this.yCord = 0;
         this.initialXCord = 0;
         this.initialYCord = 0;
+        this.health = 10;
         this.orientation = "south";
         this.degreeOfOrientation = 180;
     }

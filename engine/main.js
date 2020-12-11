@@ -26,6 +26,7 @@ window.onload = () => {
                 console.log(newCursor.xCord + ' ' + newCursor.yCord);
                 newPlayer.lastMoveDirection = "north";
                 newPlayer.checkIntersect(newCursor);
+                newEnemy.checkIntersect(newCursor);
 
                 break;
             case "A":
@@ -38,6 +39,7 @@ window.onload = () => {
                 console.log(newCursor.xCord + ' ' + newCursor.yCord);
                 newPlayer.lastMoveDirection = "west";
                 newPlayer.checkIntersect(newCursor);
+                newEnemy.checkIntersect(newCursor);
 
 
                 break;
@@ -51,6 +53,7 @@ window.onload = () => {
                 console.log(newCursor.xCord + ' ' + newCursor.yCord);
                 newPlayer.lastMoveDirection = "south";
                 newPlayer.checkIntersect(newCursor);
+                newEnemy.checkIntersect(newCursor);
 
 
                 break;
@@ -64,6 +67,7 @@ window.onload = () => {
                 console.log(newCursor.xCord + ' ' + newCursor.yCord);
                 newPlayer.lastMoveDirection = "east";
                 newPlayer.checkIntersect(newCursor);
+                newEnemy.checkIntersect(newCursor);
 
 
                 break;
@@ -91,10 +95,6 @@ window.onload = () => {
                     } else {
                         // Open game menu
                     }
-                }
-
-                if(newEnemy.destroyed === false) {
-                    newEnemy.handleStatus;
                 }
                 
                 break;
