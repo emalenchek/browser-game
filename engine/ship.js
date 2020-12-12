@@ -19,11 +19,7 @@ class Ship {
     }
 
     handleStatus() {
-        if(this.health <= 0) {
-            this.destroyed = true;
-        }
-
-        if(this.destroyed) {
+        if(this.health <= 0 && !this.destroyed) {
             this.destroyShip();
         }
     }
@@ -76,8 +72,10 @@ class Ship {
                 this.deathSpins--;
                 this.destroyShip(); 
             } else {
+                this.destroyed = true;
+                this.xCord = null;
+                this.yCord = null;
                 document.querySelector('.enemy-ship').remove();
-                this.deathSpins = 4;
             }
         }, 250);
     }
