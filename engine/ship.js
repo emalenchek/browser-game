@@ -82,9 +82,9 @@ class Ship {
 
     checkIntersect(cursor) {
         if(cursor.xCord === this.xCord && cursor.yCord === this.yCord) {
-            console.log('Intersecting');
             this.intersecting = true;
             cursor.intersectingWith = this;
+            console.log('Intersecting with ' + cursor.intersectingWith.team);
         } else {
             this.intersecting = false;
         }
@@ -106,7 +106,7 @@ class Ship {
         if((this.move * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
             // if target ship occupies square 
             if(cursor.intersectingWith.xCord === cursor.xCord && cursor.intersectingWith.yCord === cursor.yCord) {
-                console.log("This coordinate is occupied by an enemy.");
+                console.log(`This coordinate is occupied by an enemy, move within ${this.attackRange} spaces to attack.`);
                 // if target ship is within range attack target
                 if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
                     this.shipAttack(cursor.intersectingWith);
