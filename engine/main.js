@@ -39,7 +39,9 @@ window.onload = () => {
                 newEnemy.checkIntersect(newCursor);
 
                 hazards.forEach(hazard => {
-                    hazard.checkTileIntersect(newCursor);
+                    if(newCursor.intersectingWithTile === null) {
+                        hazard.checkTileIntersect(newCursor);
+                    }
                 });
 
                 break;
@@ -56,7 +58,9 @@ window.onload = () => {
                 newEnemy.checkIntersect(newCursor);
 
                 hazards.forEach(hazard => {
-                    hazard.checkTileIntersect(newCursor);
+                    if(newCursor.intersectingWithTile === null) {
+                        hazard.checkTileIntersect(newCursor);
+                    }
                 });
 
                 break;
@@ -73,7 +77,9 @@ window.onload = () => {
                 newEnemy.checkIntersect(newCursor);
 
                 hazards.forEach(hazard => {
-                    hazard.checkTileIntersect(newCursor);
+                    if(newCursor.intersectingWithTile === null) {
+                        hazard.checkTileIntersect(newCursor);
+                    }
                 });
 
                 break;
@@ -90,7 +96,9 @@ window.onload = () => {
                 newEnemy.checkIntersect(newCursor);
 
                 hazards.forEach(hazard => {
-                    hazard.checkTileIntersect(newCursor);
+                    if(newCursor.intersectingWithTile === null) {
+                        hazard.checkTileIntersect(newCursor);
+                    }
                 });
 
                 break;
