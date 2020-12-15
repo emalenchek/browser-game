@@ -4,10 +4,18 @@ window.onload = () => {
     let newPlayer = new PlayerShip();
     let newEnemy = new EnemyShip();
     let newCursor = new Cursor();
+    let newAsteroid1 = new AsteroidTile();
+    let newAsteroid2 = new AsteroidTile();
+    let newAsteroid3 = new AsteroidTile();
+    let newAsteroid4 = new AsteroidTile();
 
     console.log(newPlayer);
 
     newEnemy.placeEnemyShipStart(90, -120); 
+    newAsteroid1.setMapTile(-30, -30); 
+    newAsteroid2.setMapTile(-90, 180); 
+    newAsteroid3.setMapTile(150, 120);
+    newAsteroid4.setMapTile(-150, -150);
 
     window.addEventListener("keydown", (event) => {
         if(event.defaultPrevented) {
