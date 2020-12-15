@@ -38,11 +38,16 @@ window.onload = () => {
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
-                hazards.forEach(hazard => {
-                    if(newCursor.intersectingWithTile === null) {
-                        hazard.checkTileIntersect(newCursor);
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
                     }
-                });
+                }
 
                 break;
             case "A":
@@ -57,11 +62,17 @@ window.onload = () => {
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
-                hazards.forEach(hazard => {
-                    if(newCursor.intersectingWithTile === null) {
-                        hazard.checkTileIntersect(newCursor);
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
                     }
-                });
+                }
+
 
                 break;
             case "S":
@@ -72,15 +83,22 @@ window.onload = () => {
                     newCursor.yCord += 30;
                 document.querySelector('.cursor').style.transform = "translate(" + newCursor.xCord + "px, " + newCursor.yCord + "px)";
                 console.log(newCursor.xCord + ' ' + newCursor.yCord);
-                newPlayer.lastMoveDirection = "south";
+                newPlayer.lastMoveDirection = "south";  
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
-                hazards.forEach(hazard => {
-                    if(newCursor.intersectingWithTile === null) {
-                        hazard.checkTileIntersect(newCursor);
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
                     }
-                });
+                }
+
+     
 
                 break;
             case "D":
@@ -95,11 +113,17 @@ window.onload = () => {
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
-                hazards.forEach(hazard => {
-                    if(newCursor.intersectingWithTile === null) {
-                        hazard.checkTileIntersect(newCursor);
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
                     }
-                });
+                }
+
 
                 break;
             case "Z":

@@ -36,16 +36,17 @@ class MapTile {
         parent.append(newTile);
     }
 
-    checkTileIntersect(cursor) {
-        if(cursor.xCord === this.xCord && cursor.yCord === this.yCord) {
-            this.intersecting = true;
-            cursor.intersectingWithTile = this;
-            console.log('Intersecting with ' + cursor.intersectingWithTile.tileType);
-        } else {
-            this.intersecting = false;
-            cursor.intersectingWithTile = null;
-        }
-    }
+    // checkTileIntersect(cursor) {
+    //     if(cursor.xCord === this.xCord && cursor.yCord === this.yCord) {
+    //         cursor.intersectingWithTile = this;
+    //         this.intersecting = true;
+    //         console.log('Intersecting with ' + cursor.intersectingWithTile.tileType);
+    //     } else {
+    //         cursor.intersectingWithTile = null;
+    //         this.intersecting = false;
+    //         console.log('This asteroid not intersecting')
+    //     }
+    // }
 }
 
 class AsteroidTile extends MapTile {
