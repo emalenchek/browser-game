@@ -6,6 +6,7 @@ class MapTile {
         this.size = 30;
         this.stats = [];
         this.transform = "";
+        this.intersecting = false;
     }
 
     getTileLocation() {
@@ -33,6 +34,17 @@ class MapTile {
         newTile.className = "asteroid";
         
         parent.append(newTile);
+    }
+
+    checkTileIntersect(cursor) {
+        if(cursor.xCord === this.xCord && cursor.yCord === this.yCord) {
+            this.intersecting = true;
+            cursor.intersectingWithTile = this;
+            console.log('Intersecting with ' + cursor.intersectingWithTile.tileType);
+        } else {
+            this.intersecting = false;
+            cursor.intersectingWithTile = null;
+        }
     }
 }
 

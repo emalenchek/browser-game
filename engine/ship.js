@@ -87,6 +87,7 @@ class Ship {
             console.log('Intersecting with ' + cursor.intersectingWith.team);
         } else {
             this.intersecting = false;
+            cursor.intersectingWith = null;
         }
     }
 
@@ -105,12 +106,14 @@ class Ship {
     moveShip(cursor) {
         if((this.move * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
             // if target ship occupies square 
-            if(cursor.intersectingWith.xCord === cursor.xCord && cursor.intersectingWith.yCord === cursor.yCord) {
+            if(cursor.intersectingWith !== null) {
                 console.log(`This coordinate is occupied by an enemy, move within ${this.attackRange} spaces to attack.`);
                 // if target ship is within range attack target
                 if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
                     this.shipAttack(cursor.intersectingWith);
                 }
+            } else if(cursor.intersectingWithTile !== null && cursor.intersectingWithTile.tileType === 'asteroid') {
+                console.log(`This coordinate is occupied by a(n) ${cursor.intersectingWithTile.tileType}, you can not move here.`)
             } else {
                 this.initialXCord = cursor.xCord;
                 this.xCord = cursor.xCord;

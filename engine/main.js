@@ -17,6 +17,8 @@ window.onload = () => {
     newAsteroid3.setMapTile(150, 120);
     newAsteroid4.setMapTile(-150, -150);
 
+    let hazards = [newAsteroid1, newAsteroid2, newAsteroid3, newAsteroid4];
+
     window.addEventListener("keydown", (event) => {
         if(event.defaultPrevented) {
             return;
@@ -36,6 +38,10 @@ window.onload = () => {
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
+                hazards.forEach(hazard => {
+                    hazard.checkTileIntersect(newCursor);
+                });
+
                 break;
             case "A":
             case "a":
@@ -49,6 +55,9 @@ window.onload = () => {
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
+                hazards.forEach(hazard => {
+                    hazard.checkTileIntersect(newCursor);
+                });
 
                 break;
             case "S":
@@ -63,6 +72,9 @@ window.onload = () => {
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
+                hazards.forEach(hazard => {
+                    hazard.checkTileIntersect(newCursor);
+                });
 
                 break;
             case "D":
@@ -77,6 +89,9 @@ window.onload = () => {
                 newPlayer.checkIntersect(newCursor);
                 newEnemy.checkIntersect(newCursor);
 
+                hazards.forEach(hazard => {
+                    hazard.checkTileIntersect(newCursor);
+                });
 
                 break;
             case "Z":
