@@ -66,7 +66,7 @@ class Ship {
                 }
             
                 this.transform = "translate(" + this.initialXCord + "px, " + this.initialYCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
-                document.querySelector('.enemy-ship').style.transform = this.transform;
+                document.querySelector(`#enemy-unit-${this.indexValue}`).style.transform = this.transform;
                 
                 console.log(this.transform);               
                 this.deathSpins--;
@@ -75,7 +75,7 @@ class Ship {
                 this.destroyed = true;
                 this.xCord = null;
                 this.yCord = null;
-                document.querySelector('.enemy-ship').remove();
+                document.querySelector(`#enemy-unit-${this.indexValue}`).remove();
             }
         }, 250);
     }
@@ -95,10 +95,10 @@ class Ship {
         this.transform = "translate(" + this.xCord + "px, " + this.yCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
         
         if(this.team === "player") {
-            document.querySelector('.player-ship').style.transform = this.transform;
+            document.querySelector(`#player-unit-${this.indexValue}`).style.transform = this.transform;
             console.log(`Player Ship Cords: ${this.xCord}, ${this.yCord} `);
         } else if(this.team === "enemy") {
-            document.querySelector('.enemy-ship').style.transform = this.transform;
+            document.querySelector(`#enemy-unit-${this.indexValue}`).style.transform = this.transform;
             console.log(`Enemy Ship Cords: ${this.xCord}, ${this.yCord} `);
         }
     }
@@ -156,35 +156,40 @@ class Ship {
             document.querySelector('.move-range').style.display = 'none';
         }
     }
+
+    placeShipStart() {
+        this.transform = "translate(" + this.initialXCord + "px, " + this.initialYCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
+
+        if(this.team === 'player') {
+            document.querySelector(`#player-unit-${this.indexValue}`).style.transform = this.transform;
+        } else if(this.team === 'enemy') {
+            document.querySelector(`#enemy-unit-${this.indexValue}`).style.transform = this.transform;
+        }
+    }
 };
 
 class PlayerShip extends Ship {
-    constructor() {
+    constructor(x, y) {
         super();
+        this.initialXCord = x;
+        this.xCord = x;
+        this.initialYCord = y;
+        this.yCord = y;
         this.team = "player";
+        this.transform = "translate(" + this.initialXCord + "px, " + this.initialYCord + "px) rotate(" + this.degreeOfOrientation + "deg)"
     }
 };
 
 class EnemyShip extends Ship {
-    constructor() {
+    constructor(x, y) {
         super();
         this.team = "enemy";
-        this.xCord = 0;
-        this.yCord = 0;
-        this.initialXCord = 0;
-        this.initialYCord = 0;
+        this.xCord = x;
+        this.yCord = y;
+        this.initialXCord = x;
+        this.initialYCord = y;
         this.health = 10;
         this.orientation = "south";
         this.degreeOfOrientation = 180;
-    }
-
-    placeEnemyShipStart(x, y) {
-        this.initialXCord = x;
-        this.initialYCord = y;
-        this.xCord = x;
-        this.yCord = y;
-        this.transform = "translate(" + this.initialXCord + "px, " + this.initialYCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
-        document.querySelector('.enemy-ship').style.transform = this.transform;
-        console.log(`Enemy Ship Cords: ${this.xCord}, ${this.yCord}`);
     }
 };

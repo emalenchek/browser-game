@@ -81,6 +81,8 @@ body {
     align-items: center;
     position: absolute;
     background-image: url('media/spacepixels-0.2.0/pixel_ship.png');
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 30px;
     height: 30px;
     z-index: 100;
@@ -88,9 +90,13 @@ body {
 }
 
 .enemy-ship {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    background-image: url('media/spacepixels-0.2.0/pixel_ship.png');
+    background-image: url('media/spacepixels-0.2.0/pixel_ship3_red.png');
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 30px;
     height: 30px;
     z-index: 100;
