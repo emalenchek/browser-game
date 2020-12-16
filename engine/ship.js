@@ -126,6 +126,12 @@ class Ship {
         }
     }
 
+    shipTarget() {
+        if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
+            this.shipAttack(cursor.intersectingWith);
+        }
+    }
+
     shipAttack(target) {
         target.health -= this.attack;
         target.handleStatus();
@@ -133,6 +139,21 @@ class Ship {
             console.log("Enemy Ship Remaining Health: " + target.health);
         } else if(target.team === "player") {
             console.log("Player Ship Remaining Health: " + target.health);
+        }
+    }
+
+    showMovementRange() {
+        if(document.querySelector('.move-range').style.display === 'none') {
+            document.querySelector('.move-range').style.display = 'block';
+        }
+        else {
+            document.querySelector('.move-range').style.display = 'none';
+        }
+    }
+
+    hideMovementRange() {
+        if(document.querySelector('.move-range').style.display === 'block') {
+            document.querySelector('.move-range').style.display = 'none';
         }
     }
 };

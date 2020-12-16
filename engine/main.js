@@ -9,8 +9,6 @@ window.onload = () => {
     let newAsteroid3 = new AsteroidTile();
     let newAsteroid4 = new AsteroidTile();
 
-    console.log(newPlayer);
-
     newEnemy.placeEnemyShipStart(90, -120); 
     newAsteroid1.setMapTile(-30, -30); 
     newAsteroid2.setMapTile(-90, 180); 
@@ -132,6 +130,7 @@ window.onload = () => {
                 if(newPlayer.intersecting === true) {
                     if(newPlayer.selected === false) {
                         newPlayer.selected = true;
+                        newPlayer.showMovementRange();
                         console.log("Intersecting: " + newPlayer.intersecting);
                         console.log("Selected: " + newPlayer.selected);
                     } else {
@@ -142,6 +141,7 @@ window.onload = () => {
                 } else {
                     if(newPlayer.selected === true) {
                         newPlayer.setOrientation(newPlayer.lastMoveDirection);
+                        newPlayer.showMovementRange();
                         newPlayer.moveShip(newCursor);
                         newPlayer.selected = false;
                         newPlayer.intersecting = true;
@@ -158,7 +158,8 @@ window.onload = () => {
                 if(newPlayer.selected === true) {
                     newPlayer.selected = false;
                     console.log('unselected');
-                } 
+                }
+                newPlayer.hideMovementRange();
                 break;
             default:
                 break;
