@@ -16,11 +16,13 @@ class Ship {
         this.transform = "";
         this.destroyed = false;
         this.deathSpins = 4;
+        this.canMove = false;
+        this.canAttack = false;
     }
 
-    handleStatus() {
+    handleStatus(game) {
         if(this.health <= 0 && !this.destroyed) {
-            this.destroyShip();
+            this.destroyShip(game);
         }
     }
 
@@ -47,7 +49,7 @@ class Ship {
         };
     }
 
-    destroyShip() {
+    destroyShip(game) {
         setTimeout(() => {
             if (this.deathSpins > 0) { 
                 switch(this.degreeOfOrientation) {
@@ -70,9 +72,10 @@ class Ship {
                 
                 console.log(this.transform);               
                 this.deathSpins--;
-                this.destroyShip(); 
+                this.destroyShip(game); 
             } else {
-                this.destroyed = true;
+                this.destroyed = true;           
+                game.destroyShipCheck(this);
                 this.xCord = null;
                 this.yCord = null;
                 document.querySelector(`#enemy-unit-${this.indexValue}`).remove();
@@ -103,14 +106,14 @@ class Ship {
         }
     }
 
-    moveShip(cursor) {
+    moveShip(cursor, game) {
         if((this.move * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
             // if target ship occupies square 
             if(cursor.intersectingWith !== null) {
                 console.log(`This coordinate is occupied by an enemy, move within ${this.attackRange} spaces to attack.`);
                 // if target ship is within range attack target
                 if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
-                    this.shipAttack(cursor.intersectingWith);
+                    this.shipAttack(cursor.intersectingWith, game);
                 }
             } else if(cursor.intersectingWithTile !== null && cursor.intersectingWithTile.tileType === 'asteroid') {
                 console.log(`This coordinate is occupied by a(n) ${cursor.intersectingWithTile.tileType}, you can not move here.`)
@@ -126,15 +129,15 @@ class Ship {
         }
     }
 
-    shipTarget() {
+    shipTarget(game) {
         if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
-            this.shipAttack(cursor.intersectingWith);
+            this.shipAttack(cursor.intersectingWith, game);
         }
     }
 
-    shipAttack(target) {
+    shipAttack(target, game) {
         target.health -= this.attack;
-        target.handleStatus();
+        target.handleStatus(game);
         if(target.team === "enemy") {
             console.log("Enemy Ship Remaining Health: " + target.health);
         } else if(target.team === "player") {
