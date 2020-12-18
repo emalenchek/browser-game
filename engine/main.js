@@ -238,6 +238,10 @@ window.onload = () => {
             case "z":
 
                 for(let i = 0; i < game.playerTeam.length; i++) {
+                    game.playerTeam[i].checkIntersect(newCursor);
+                }
+
+                for(let i = 0; i < game.playerTeam.length; i++) {
                     if(game.playerTeam[i].intersecting === true) {
                         if(game.playerTeam[i].selected === false) {
                             game.playerTeam[i].selected = true;

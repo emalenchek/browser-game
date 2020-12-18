@@ -88,6 +88,8 @@ class Ship {
             this.intersecting = true;
             cursor.intersectingWith = this;
             console.log('Intersecting with ' + cursor.intersectingWith.team);
+        } else if(cursor.intersectingWith !== null) {
+            console.log(`Intersecting with ${cursor.intersectingWith.team}`);
         } else {
             this.intersecting = false;
             cursor.intersectingWith = null;
@@ -110,10 +112,15 @@ class Ship {
         if((this.move * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
             // if target ship occupies square 
             if(cursor.intersectingWith !== null) {
-                console.log(`This coordinate is occupied by an enemy, move within ${this.attackRange} spaces to attack.`);
-                // if target ship is within range attack target
-                if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
-                    this.shipAttack(cursor.intersectingWith, game);
+                console.log(cursor.intersectingWith);
+                if(cursor.intersectingWith.team === 'enemy') {
+                    console.log(`This coordinate is occupied by an enemy, move within ${this.attackRange} spaces to attack.`);
+                    // if target ship is within range attack target
+                    if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
+                        this.shipAttack(cursor.intersectingWith, game);
+                    }
+                } else if(cursor.intersectingWith.team === 'player') {
+                    console.log(`This space is occupied by another player unit`);
                 }
             } else if(cursor.intersectingWithTile !== null && cursor.intersectingWithTile.tileType === 'asteroid') {
                 console.log(`This coordinate is occupied by a(n) ${cursor.intersectingWithTile.tileType}, you can not move here.`)
@@ -122,8 +129,8 @@ class Ship {
                 this.xCord = cursor.xCord;
                 this.initialYCord = cursor.yCord;
                 this.yCord = cursor.yCord;
+                this.placeShip();
             }
-            this.placeShip();
         } else {
             console.log("Can't move that far");
         }
