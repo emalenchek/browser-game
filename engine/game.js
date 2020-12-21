@@ -15,7 +15,13 @@ class Game {
         this.setEnemyTeam(enemyTeam);
         this.playerTeamSize = this.playerTeam.length;
         this.enemyTeamSize = this.enemyTeam.length;
+        
+        for(let i = 0; i < this.playerTeam.length; i++) {
+            this.playerTeam[i].canMove = true;
+        }
+
         this.playerTurn = true;
+
     }
 
     setPlayerTeam(playerTeam) {
@@ -26,13 +32,41 @@ class Game {
         this.enemyTeam = enemyTeam;
     }
 
+    checkPlayerTurnEnd() {
+        let turnEnd = false;
+        let pTeam = this.playerTeam;
+        for(let i = 0; i < pTeam.length; i++) {
+            if(pTeam[i].canMove === false) {
+                turnEnd = true;
+            } else if(pTeam[i].canMove === true) {
+                turnEnd = false;
+            }
+        }
+
+        if(turnEnd === true) {
+            console.log(`Player Turn End... `)
+            this.swapActiveTurn();
+        }
+    }
+
+    checkEnemyTurnEnd() {
+        if(this.enemyTurn === true) {
+            console.log(`Enemy Turn End.... `);
+            this.swapActiveTurn();
+        }
+    }
+
     swapActiveTurn() {
         if(this.playerTurn === true) {
             this.playerTurn = false;
             this.enemyTurn = true;
-        } else {
+        } else if(this.enemyTurn === true) {
             this.enemyTurn = false;
             this.playerTurn = true;
+
+            for(let i = 0; i < this.playerTeam.length; i++) {
+                this.playerTeam[i].canMove = true;
+            }
         }
     }
 

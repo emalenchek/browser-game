@@ -130,6 +130,7 @@ class Ship {
                 this.initialYCord = cursor.yCord;
                 this.yCord = cursor.yCord;
                 this.placeShip();
+                this.canMove = false;
             }
         } else {
             console.log("Can't move that far");

@@ -255,9 +255,11 @@ window.onload = () => {
                         }
                     } else {
                         if(game.playerTeam[i].selected === true) {
-                            game.playerTeam[i].setOrientation(game.playerTeam[i].lastMoveDirection);
-                            //game.playerTeam[i].showMovementRange();
-                            game.playerTeam[i].moveShip(newCursor, game);
+                            if(game.playerTeam[i].canMove === true) {
+                                game.playerTeam[i].setOrientation(game.playerTeam[i].lastMoveDirection);
+                                //game.playerTeam[i].showMovementRange();
+                                game.playerTeam[i].moveShip(newCursor, game);
+                            }
                             game.playerTeam[i].selected = false;
                             game.playerTeam[i].intersecting = true;
                             console.log("Intersecting: " + game.playerTeam[i].intersecting);
@@ -282,6 +284,9 @@ window.onload = () => {
             default:
                 break;
         }
+
+        game.checkPlayerTurnEnd();
+        game.checkEnemyTurnEnd();
 
         event.preventDefault();
     }, true);
