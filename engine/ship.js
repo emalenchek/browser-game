@@ -210,4 +210,27 @@ class EnemyShip extends Ship {
         this.orientation = "south";
         this.degreeOfOrientation = 180;
     }
+
+    // For now we will loop through all player ships and return the lowest health player ship in range
+    checkPlayerInRange(playerTeam) {
+        // if player is within attack + move range
+        let totalRange = this.attackRange + this.move;
+        let playerInRange = false;
+        let lowestHealthPlayer = null;
+
+        
+        for(let i = 0; i < playerTeam.length; i++) {
+            if((totalRange * 30) > Math.sqrt((this.xCord - playerTeam[i].xCord)^2+(this.yCord - playerTeam[i].yCord)^2)) {
+                console.log(`player within range of enemy`);
+                playerInRange = true;
+                if(lowestHealthPlayer === null) {
+                    lowestHealthPlayer = playerTeam[i];
+                } else if(lowestHealthPlayer.health > playerTeam[i].health) {
+                    lowestHealthPlayer = playerTeam[i];
+                }
+            }
+        }
+
+        return lowestHealthPlayer;
+    }
 };

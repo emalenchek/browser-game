@@ -51,11 +51,26 @@ class Game {
         }
     }
 
+    handleEnemyTurn() {
+        for(let i = 0; i < this.enemyTeam.length; i++) {
+            if(this.enemyTeam[i].checkPlayerInRange(this.playerTeam) !== null) {
+                console.log(`Player in range.`);
+                if(this.enemyTeam[i].canMove) {
+                    // Handle enemy movement
+                    if(this.enemyTeam[i].canAttack) {
+                        // Handle enemy attack
+                    }
+                }
+            } 
+        }
+    }
+
     checkEnemyTurnEnd() {
         if(this.enemyTurn === true) {
+            this.handleEnemyTurn();
             console.log(`Enemy Turn End.... `);
             this.swapActiveTurn();
-        }
+        } 
     }
 
     swapActiveTurn() {
