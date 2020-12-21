@@ -9,20 +9,24 @@ window.onload = () => {
 
     let newCursor = new Cursor();
     
-    let newAsteroid1 = new AsteroidTile();
-    let newAsteroid2 = new AsteroidTile();
-    let newAsteroid3 = new AsteroidTile();
-    let newAsteroid4 = new AsteroidTile();
+    game.populateMap();
+
+    // let newAsteroid1 = new AsteroidTile();
+    // let newAsteroid2 = new AsteroidTile();
+    // let newAsteroid3 = new AsteroidTile();
+    // let newAsteroid4 = new AsteroidTile();
 
     // newEnemy.placeEnemyShipStart(); 
-    newAsteroid1.setMapTile(-30, -30); 
-    newAsteroid2.setMapTile(-90, 180); 
-    newAsteroid3.setMapTile(150, 120);
-    newAsteroid4.setMapTile(-150, -150);
+    // newAsteroid1.setMapTile(); 
+    // newAsteroid2.setMapTile(-90, 180); 
+    // newAsteroid3.setMapTile(150, 120);
+    // newAsteroid4.setMapTile(-150, -150);
 
     let playerTeam = [newPlayer, newPlayer1];
     let enemyTeam = [newEnemy];
-    let hazards = [newAsteroid1, newAsteroid2, newAsteroid3, newAsteroid4];
+
+    game.setOccupiedTiles(playerTeam, enemyTeam);
+    // let hazards = [newAsteroid1, newAsteroid2, newAsteroid3, newAsteroid4];
 
     game.start(playerTeam, enemyTeam);
 
@@ -90,16 +94,16 @@ window.onload = () => {
                     }
                 }
 
-                for(let i = 0; i < hazards.length; i++) {
-                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                        newCursor.intersectingWithTile = hazards[i];
-                        hazards[i].intersecting = true;
-                        break;
-                    } else {
-                        newCursor.intersectingWithTile = null;
-                        hazards[i].intersecting = false;
-                    }
-                }
+                // for(let i = 0; i < hazards.length; i++) {
+                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                //         newCursor.intersectingWithTile = hazards[i];
+                //         hazards[i].intersecting = true;
+                //         break;
+                //     } else {
+                //         newCursor.intersectingWithTile = null;
+                //         hazards[i].intersecting = false;
+                //     }
+                // }
 
                 break;
             case "A":
@@ -134,16 +138,16 @@ window.onload = () => {
                     }
                 }
 
-                for(let i = 0; i < hazards.length; i++) {
-                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                        newCursor.intersectingWithTile = hazards[i];
-                        hazards[i].intersecting = true;
-                        break;
-                    } else {
-                        newCursor.intersectingWithTile = null;
-                        hazards[i].intersecting = false;
-                    }
-                }
+                // for(let i = 0; i < hazards.length; i++) {
+                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                //         newCursor.intersectingWithTile = hazards[i];
+                //         hazards[i].intersecting = true;
+                //         break;
+                //     } else {
+                //         newCursor.intersectingWithTile = null;
+                //         hazards[i].intersecting = false;
+                //     }
+                // }
 
                 break;
             case "S":
@@ -178,16 +182,16 @@ window.onload = () => {
                     }
                 }
 
-                for(let i = 0; i < hazards.length; i++) {
-                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                        newCursor.intersectingWithTile = hazards[i];
-                        hazards[i].intersecting = true;
-                        break;
-                    } else {
-                        newCursor.intersectingWithTile = null;
-                        hazards[i].intersecting = false;
-                    }
-                }
+                // for(let i = 0; i < hazards.length; i++) {
+                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                //         newCursor.intersectingWithTile = hazards[i];
+                //         hazards[i].intersecting = true;
+                //         break;
+                //     } else {
+                //         newCursor.intersectingWithTile = null;
+                //         hazards[i].intersecting = false;
+                //     }
+                // }
 
                 break;
             case "D":
@@ -222,16 +226,16 @@ window.onload = () => {
                     }
                 }
 
-                for(let i = 0; i < hazards.length; i++) {
-                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                        newCursor.intersectingWithTile = hazards[i];
-                        hazards[i].intersecting = true;
-                        break;
-                    } else {
-                        newCursor.intersectingWithTile = null;
-                        hazards[i].intersecting = false;
-                    }
-                }
+                // for(let i = 0; i < hazards.length; i++) {
+                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                //         newCursor.intersectingWithTile = hazards[i];
+                //         hazards[i].intersecting = true;
+                //         break;
+                //     } else {
+                //         newCursor.intersectingWithTile = null;
+                //         hazards[i].intersecting = false;
+                //     }
+                // }
 
                 break;
             case "Z":

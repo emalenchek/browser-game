@@ -6,7 +6,31 @@ class Game {
         this.playerTeamSize = 0;
         this.enemyTeamSize = 0;
         this.playerTurn = false;
-        this.enemyTurn = false; 
+        this.enemyTurn = false;
+        this.mapRows = 9;
+        this.mapCols = 9;
+        this.map = [];
+        this.mapTileSize = 30;
+    }
+
+    getTileByLocation(x, y) {
+        for(let i = 0; i < this.map.length; i++) {
+            if (this.map[i].xCord === x && this.map[i].yCord === y) {
+                return this.map[i];
+            }
+        }
+    }
+
+    populateMap() {
+        for(let i = 0; i < this.mapRows; i++) {
+            for(let j = 0; j < this.mapCols; j++) {
+                let x = (-240 + (i * this.mapTileSize));
+                let y = (-240 + (j * this.mapTileSize));
+                let temp = new MapTile(x, y);
+                this.map.push(temp);
+                temp.setMapTile;
+            }
+        }
     }
 
     start(playerTeam, enemyTeam) {
@@ -31,6 +55,22 @@ class Game {
 
     setEnemyTeam(enemyTeam) {
         this.enemyTeam = enemyTeam;
+    }
+
+    setOccupiedTiles(playerTeam, enemyTeam) {
+        for(let i = 0; i < playerTeam.length; i++) {
+            let x = playerTeam[i].xCord;
+            let y = playerTeam[i].yCord;
+            let temp = this.getTileByLocation(x, y);
+            temp.handleOccupied(playerTeam[i]);
+        }
+
+        for(let i = 0; i < enemyTeam.length; i++) {
+            let x = enemyTeam[i].xCord;
+            let y = enemyTeam[i].yCord;
+            let temp = this.getTileByLocation(x, y);
+            temp.handleOccupied(enemyTeam[i]);
+        }
     }
 
     checkPlayerTurnEnd() {

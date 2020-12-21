@@ -74,6 +74,11 @@ class Ship {
                 this.deathSpins--;
                 this.destroyShip(game); 
             } else {
+                // map tile no longer occupied
+                let tile = game.getTileByLocation(this.xCord, this.yCord);
+                tile.setOccupied(null);
+
+                // handle ship destroyed
                 this.destroyed = true;           
                 game.destroyShipCheck(this);
                 this.xCord = null;
@@ -129,12 +134,21 @@ class Ship {
                 console.log(`This coordinate is occupied by a(n) ${cursor.intersectingWithTile.tileType}, you can not move here.`)
             } else {
                 if(this.canMove === true) {
+                    // old tile no longer occupied
+                    let oldTile = game.getTileByLocation(this.xCord, this.yCord);
+                    oldTile.setOccupied(null);
+
+                    // updates ship coordinates and places ship
                     this.initialXCord = cursor.xCord;
                     this.xCord = cursor.xCord;
                     this.initialYCord = cursor.yCord;
                     this.yCord = cursor.yCord;
                     this.placeShip();
                     this.canMove = false;
+
+                    // new tile is occupied
+                    let newTile = game.getTileByLocation(this.xCord, this.yCord);
+                    newTile.setOccupied(this);
                 } else {
                     console.log(`This unit already moved or can not move.`);
                 }
@@ -215,7 +229,6 @@ class EnemyShip extends Ship {
     checkPlayerInRange(playerTeam) {
         // if player is within attack + move range
         let totalRange = this.attackRange + this.move;
-        let playerInRange = false;
         let lowestHealthPlayer = null;
 
         

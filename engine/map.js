@@ -1,12 +1,16 @@
 class MapTile {
-    constructor() {
-        this.xCord = 0;
-        this.yCord = 0;
+    constructor(x, y) {
+        this.xCord = x;
+        this.yCord = y;
         this.background = '';
         this.size = 30;
         this.stats = [];
+        this.parent = document.querySelector('.game-board');
+        this.tileType = 'default';
         this.transform = "";
         this.intersecting = false;
+        this.occupied = false;
+        this.occupiedBy = null;
     }
 
     getTileLocation() {
@@ -14,15 +18,15 @@ class MapTile {
         return loc;
     }
 
+    getAdjacentTiles() {
+        // return adjacent tiles
+    }
+
     getTileStats() {
         return this.stats;
     }
 
-    setMapTile(x, y) {
-        let parent = document.querySelector('.game-board');
-
-        this.xCord = x;
-        this.yCord = y;
+    setMapTile() {
         this.transform = `translate(${this.xCord}px, ${this.yCord}px)`;
 
         let newTile = document.createElement("div");
@@ -31,9 +35,22 @@ class MapTile {
         newTile.style.height = `${this.size}px`;
         newTile.style.transform = this.transform;
 
-        newTile.className = "asteroid";
+        if(this.tileType === 'asteroid') {
+            newTile.className = "asteroid";
+        } else if(this.tileType === 'default') {
+            newTile.className = "default-tile";
+        }
         
         parent.append(newTile);
+    }
+
+    setOccupied(ship) {
+        if(ship === null) {
+            this.occupied = false;
+        } else {
+            this.occupied = true;
+        }
+        this.occupiedBy = ship;
     }
 }
 
