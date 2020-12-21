@@ -11,26 +11,29 @@ window.onload = () => {
     
     game.populateMap();
 
-    // let newAsteroid1 = new AsteroidTile();
-    // let newAsteroid2 = new AsteroidTile();
-    // let newAsteroid3 = new AsteroidTile();
-    // let newAsteroid4 = new AsteroidTile();
+    game.getTileByLocation(-210, -180).setTileAsteroid();
+    game.getTileByLocation(-90, 180).setTileAsteroid();
+    game.getTileByLocation(150, 120).setTileAsteroid();
+    game.getTileByLocation(-150, -150).setTileAsteroid();
 
-    // newEnemy.placeEnemyShipStart(); 
-    // newAsteroid1.setMapTile(); 
-    // newAsteroid2.setMapTile(-90, 180); 
-    // newAsteroid3.setMapTile(150, 120);
-    // newAsteroid4.setMapTile(-150, -150);
+    let newAsteroid1 = game.getTileByLocation(-210, -180);
+    let newAsteroid2 = game.getTileByLocation(-90, 180);
+    let newAsteroid3 = game.getTileByLocation(150, 120);
+    let newAsteroid4 = game.getTileByLocation(-150, -150);
 
     let playerTeam = [newPlayer, newPlayer1];
     let enemyTeam = [newEnemy];
 
-    console.log(game.getTileByLocation(-60, 60));
-
     game.setOccupiedTiles(playerTeam, enemyTeam);
-    // let hazards = [newAsteroid1, newAsteroid2, newAsteroid3, newAsteroid4];
+
+    let hazards = [newAsteroid1, newAsteroid2, newAsteroid3, newAsteroid4];
 
     game.start(playerTeam, enemyTeam);
+
+    for(let i = 0; i < hazards; i++) {
+        hazards[i].setMapTile();
+    }
+
 
     /* Set player ships to initial coords */
 
@@ -71,6 +74,7 @@ window.onload = () => {
                     newCursor.yCord -= 30;
                 document.querySelector('.cursor').style.transform = "translate(" + newCursor.xCord + "px, " + newCursor.yCord + "px)";
                 console.log(newCursor.xCord + ' ' + newCursor.yCord);
+                newCursor.intersectingWithTile = game.getTileByLocation(newCursor.xCord, newCursor.yCord);
 
                 for(let i = 0; i < game.playerTeam.length; i++) {
                     game.playerTeam[i].lastMoveDirection = "north";
@@ -96,16 +100,16 @@ window.onload = () => {
                     }
                 }
 
-                // for(let i = 0; i < hazards.length; i++) {
-                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                //         newCursor.intersectingWithTile = hazards[i];
-                //         hazards[i].intersecting = true;
-                //         break;
-                //     } else {
-                //         newCursor.intersectingWithTile = null;
-                //         hazards[i].intersecting = false;
-                //     }
-                // }
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
+                    }
+                }
 
                 break;
             case "A":
@@ -115,6 +119,7 @@ window.onload = () => {
                 if (newCursor.xCord > -240)
                     newCursor.xCord -= 30;
                 document.querySelector('.cursor').style.transform = "translate(" + newCursor.xCord + "px, " + newCursor.yCord + "px)";
+                newCursor.intersectingWithTile = game.getTileByLocation(newCursor.xCord, newCursor.yCord);
 
                 for(let i = 0; i < game.playerTeam.length; i++) {
                     game.playerTeam[i].lastMoveDirection = "west";
@@ -140,16 +145,16 @@ window.onload = () => {
                     }
                 }
 
-                // for(let i = 0; i < hazards.length; i++) {
-                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                //         newCursor.intersectingWithTile = hazards[i];
-                //         hazards[i].intersecting = true;
-                //         break;
-                //     } else {
-                //         newCursor.intersectingWithTile = null;
-                //         hazards[i].intersecting = false;
-                //     }
-                // }
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
+                    }
+                }
 
                 break;
             case "S":
@@ -159,6 +164,7 @@ window.onload = () => {
                 if (newCursor.yCord < 240)
                     newCursor.yCord += 30;
                 document.querySelector('.cursor').style.transform = "translate(" + newCursor.xCord + "px, " + newCursor.yCord + "px)";
+                newCursor.intersectingWithTile = game.getTileByLocation(newCursor.xCord, newCursor.yCord);
 
                 for(let i = 0; i < game.playerTeam.length; i++) {
                     game.playerTeam[i].lastMoveDirection = "south";
@@ -184,16 +190,16 @@ window.onload = () => {
                     }
                 }
 
-                // for(let i = 0; i < hazards.length; i++) {
-                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                //         newCursor.intersectingWithTile = hazards[i];
-                //         hazards[i].intersecting = true;
-                //         break;
-                //     } else {
-                //         newCursor.intersectingWithTile = null;
-                //         hazards[i].intersecting = false;
-                //     }
-                // }
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
+                    }
+                }
 
                 break;
             case "D":
@@ -203,6 +209,7 @@ window.onload = () => {
                 if (newCursor.xCord < 240)
                     newCursor.xCord += 30;
                 document.querySelector('.cursor').style.transform = "translate(" + newCursor.xCord + "px, " + newCursor.yCord + "px)";
+                newCursor.intersectingWithTile = game.getTileByLocation(newCursor.xCord, newCursor.yCord);
 
                 for(let i = 0; i < game.playerTeam.length; i++) {
                     game.playerTeam[i].lastMoveDirection = "east";
@@ -228,16 +235,16 @@ window.onload = () => {
                     }
                 }
 
-                // for(let i = 0; i < hazards.length; i++) {
-                //     if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
-                //         newCursor.intersectingWithTile = hazards[i];
-                //         hazards[i].intersecting = true;
-                //         break;
-                //     } else {
-                //         newCursor.intersectingWithTile = null;
-                //         hazards[i].intersecting = false;
-                //     }
-                // }
+                for(let i = 0; i < hazards.length; i++) {
+                    if(newCursor.xCord === hazards[i].xCord && newCursor.yCord === hazards[i].yCord) {
+                        newCursor.intersectingWithTile = hazards[i];
+                        hazards[i].intersecting = true;
+                        break;
+                    } else {
+                        newCursor.intersectingWithTile = null;
+                        hazards[i].intersecting = false;
+                    }
+                }
 
                 break;
             case "Z":

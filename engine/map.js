@@ -52,6 +52,11 @@ class MapTile {
         }
         this.occupiedBy = ship;
     }
+
+    setTileAsteroid() {
+        this.tileType = "asteroid";
+        this.background = "url('media/spacepixels-0.2.0/asteroid_grey.png')";
+    }
 }
 
 class AsteroidTile extends MapTile {
