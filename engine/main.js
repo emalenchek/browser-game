@@ -25,6 +25,8 @@ window.onload = () => {
     let playerTeam = [newPlayer, newPlayer1];
     let enemyTeam = [newEnemy];
 
+    console.log(game.getTileByLocation(-60, 60));
+
     game.setOccupiedTiles(playerTeam, enemyTeam);
     // let hazards = [newAsteroid1, newAsteroid2, newAsteroid3, newAsteroid4];
 

@@ -7,8 +7,8 @@ class Game {
         this.enemyTeamSize = 0;
         this.playerTurn = false;
         this.enemyTurn = false;
-        this.mapRows = 9;
-        this.mapCols = 9;
+        this.mapRows = 15;
+        this.mapCols = 15;
         this.map = [];
         this.mapTileSize = 30;
     }
@@ -62,14 +62,16 @@ class Game {
             let x = playerTeam[i].xCord;
             let y = playerTeam[i].yCord;
             let temp = this.getTileByLocation(x, y);
-            temp.handleOccupied(playerTeam[i]);
+            playerTeam[i].occupyingTile = temp;
+            temp.setOccupied(playerTeam[i]);
         }
 
         for(let i = 0; i < enemyTeam.length; i++) {
             let x = enemyTeam[i].xCord;
             let y = enemyTeam[i].yCord;
             let temp = this.getTileByLocation(x, y);
-            temp.handleOccupied(enemyTeam[i]);
+            enemyTeam[i].occupyingTile = temp;
+            temp.setOccupied(enemyTeam[i]);
         }
     }
 

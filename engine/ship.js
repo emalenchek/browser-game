@@ -18,6 +18,7 @@ class Ship {
         this.deathSpins = 4;
         this.canMove = false;
         this.canAttack = false;
+        this.occupyingTile = null;
     }
 
     handleStatus(game) {
@@ -81,6 +82,7 @@ class Ship {
                 // handle ship destroyed
                 this.destroyed = true;           
                 game.destroyShipCheck(this);
+                this.occupyingTile = null;
                 this.xCord = null;
                 this.yCord = null;
                 document.querySelector(`#enemy-unit-${this.indexValue}`).remove();
@@ -137,6 +139,7 @@ class Ship {
                     // old tile no longer occupied
                     let oldTile = game.getTileByLocation(this.xCord, this.yCord);
                     oldTile.setOccupied(null);
+                    this.occupyingTile = null;
 
                     // updates ship coordinates and places ship
                     this.initialXCord = cursor.xCord;
@@ -149,6 +152,9 @@ class Ship {
                     // new tile is occupied
                     let newTile = game.getTileByLocation(this.xCord, this.yCord);
                     newTile.setOccupied(this);
+                    this.occupyingTile = newTile;
+
+                    console.log(`Player occupying tile: ${this.occupyingTile}`);
                 } else {
                     console.log(`This unit already moved or can not move.`);
                 }
@@ -235,7 +241,6 @@ class EnemyShip extends Ship {
         for(let i = 0; i < playerTeam.length; i++) {
             if((totalRange * 30) > Math.sqrt((this.xCord - playerTeam[i].xCord)^2+(this.yCord - playerTeam[i].yCord)^2)) {
                 console.log(`player within range of enemy`);
-                playerInRange = true;
                 if(lowestHealthPlayer === null) {
                     lowestHealthPlayer = playerTeam[i];
                 } else if(lowestHealthPlayer.health > playerTeam[i].health) {
