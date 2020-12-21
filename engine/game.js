@@ -18,6 +18,7 @@ class Game {
         
         for(let i = 0; i < this.playerTeam.length; i++) {
             this.playerTeam[i].canMove = true;
+            this.playerTeam[i].canAttack = true;
         }
 
         this.playerTurn = true;
@@ -40,6 +41,7 @@ class Game {
                 turnEnd = true;
             } else if(pTeam[i].canMove === true) {
                 turnEnd = false;
+                break;
             }
         }
 
@@ -66,6 +68,7 @@ class Game {
 
             for(let i = 0; i < this.playerTeam.length; i++) {
                 this.playerTeam[i].canMove = true;
+                this.playerTeam[i].canAttack = true;
             }
         }
     }

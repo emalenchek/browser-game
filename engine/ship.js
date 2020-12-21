@@ -117,7 +117,10 @@ class Ship {
                     console.log(`This coordinate is occupied by an enemy, move within ${this.attackRange} spaces to attack.`);
                     // if target ship is within range attack target
                     if((this.attackRange * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
-                        this.shipAttack(cursor.intersectingWith, game);
+                        if(this.canAttack === true) {
+                            this.shipAttack(cursor.intersectingWith, game);
+                            this.canAttack = false;
+                        }
                     }
                 } else if(cursor.intersectingWith.team === 'player') {
                     console.log(`This space is occupied by another player unit`);
@@ -125,12 +128,16 @@ class Ship {
             } else if(cursor.intersectingWithTile !== null && cursor.intersectingWithTile.tileType === 'asteroid') {
                 console.log(`This coordinate is occupied by a(n) ${cursor.intersectingWithTile.tileType}, you can not move here.`)
             } else {
-                this.initialXCord = cursor.xCord;
-                this.xCord = cursor.xCord;
-                this.initialYCord = cursor.yCord;
-                this.yCord = cursor.yCord;
-                this.placeShip();
-                this.canMove = false;
+                if(this.canMove === true) {
+                    this.initialXCord = cursor.xCord;
+                    this.xCord = cursor.xCord;
+                    this.initialYCord = cursor.yCord;
+                    this.yCord = cursor.yCord;
+                    this.placeShip();
+                    this.canMove = false;
+                } else {
+                    console.log(`This unit already moved or can not move.`);
+                }
             }
         } else {
             console.log("Can't move that far");

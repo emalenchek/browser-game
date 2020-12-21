@@ -255,7 +255,7 @@ window.onload = () => {
                         }
                     } else {
                         if(game.playerTeam[i].selected === true) {
-                            if(game.playerTeam[i].canMove === true) {
+                            if(game.playerTeam[i].canMove === true || game.playerTeam[i].canAttack === true) {
                                 game.playerTeam[i].setOrientation(game.playerTeam[i].lastMoveDirection);
                                 //game.playerTeam[i].showMovementRange();
                                 game.playerTeam[i].moveShip(newCursor, game);
