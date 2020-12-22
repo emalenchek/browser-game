@@ -52,10 +52,11 @@ class MapTile {
     setOccupied(ship) {
         if(ship === null) {
             this.occupied = false;
+            this.occupiedBy = null;
         } else {
             this.occupied = true;
+            this.occupiedBy = ship;
         }
-        this.occupiedBy = ship;
     }
 
     setTileAsteroid() {

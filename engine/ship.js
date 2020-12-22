@@ -68,7 +68,7 @@ class Ship {
                         break; 
                 }
             
-                this.transform = "translate(" + this.initialXCord + "px, " + this.initialYCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
+                this.transform = "translate(" + this.xCord + "px, " + this.yCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
 
                 if(this.team === 'player') {
                     document.querySelector(`#player-unit-${this.indexValue}`).style.transform = this.transform;
