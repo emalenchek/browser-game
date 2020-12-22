@@ -249,14 +249,14 @@ class EnemyShip extends Ship {
 
         
         for(let i = 0; i < playerTeam.length; i++) {
-            if((totalRange * 30) > Math.sqrt((this.xCord - playerTeam[i].xCord)^2+(this.yCord - playerTeam[i].yCord)^2)) {
+            if((totalRange * 30) >= Math.sqrt(Math.pow(this.xCord - playerTeam[i].xCord, 2) + Math.pow(this.yCord - playerTeam[i].yCord, 2))) {
                 console.log(`player within range of enemy`);
                 if(lowestHealthPlayer === null) {
                     lowestHealthPlayer = playerTeam[i];
                 } else if(lowestHealthPlayer.health > playerTeam[i].health) {
                     lowestHealthPlayer = playerTeam[i];
                 }
-            }
+            } else {console.log('No players in range of enemy');}
         }
 
         return lowestHealthPlayer;
@@ -271,7 +271,7 @@ class EnemyShip extends Ship {
         for(let i = 0; i < adjacentTiles.length; i++) {
             if(adjacentTiles[i].xCord <= 240 && adjacentTiles[i].yCord <= 240) {
                 if(adjacentTiles[i].yCord >= -240 && adjacentTiles[i].yCord >= -240) {
-                    if((totalRange * 30) > Math.sqrt((this.xCord - adjacentTiles[i].xCord)^2 + (this.yCord - adjacentTiles[i].yCord)^2)) {
+                    if((totalRange * 30) > Math.sqrt(Math.pow(this.xCord - adjacentTiles[i].xCord, 2) + Math.pow(this.yCord - adjacentTiles[i].yCord, 2))) {
                         if(adjacentTiles[i].occupiedBy !== null) {
                             console.log(`This tile is not a possible move. (occupied)`);
                         } else if(adjacentTiles[i].tileType === "asteroid") {
