@@ -18,12 +18,17 @@ class MapTile {
         return loc;
     }
 
-    getAdjacentTiles() {
-        // return adjacent tiles
+    getAdjacentTileCords() {
+        return [
+                [this.xCord + 30, this.yCord], // right
+                [this.xCord, this.yCord + 30], // bottom
+                [this.xCord -30, this.yCord], // left
+                [this.xCord, this.yCord - 30] // top
+            ]
     }
 
     getTileStats() {
-        return this.stats;
+        // nothing yet
     }
 
     setMapTile() {

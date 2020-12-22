@@ -21,6 +21,19 @@ class Game {
         }
     }
 
+    getAdjacentTiles(tile) {
+        let adjacentTileLocations = [];
+        let adjacentTiles = [];
+
+        adjacentTileLocations.push(tile.getAdjacentTileCords());
+
+        for(let i = 0; i < adjacentTileLocations.length; i++) {
+            adjacentTiles.push(this.getTileByLocation(adjacentTileLocations[0][i][0], adjacentTileLocations[0][i][1])); 
+        }
+
+        return adjacentTiles;
+    }
+
     populateMap() {
         for(let i = 0; i < this.mapRows; i++) {
             for(let j = 0; j < this.mapCols; j++) {
@@ -95,13 +108,14 @@ class Game {
 
     handleEnemyTurn() {
         for(let i = 0; i < this.enemyTeam.length; i++) {
+            this.enemyTeam[i].canMove = true;
+            this.enemyTeam[i].canAttack = true;
             if(this.enemyTeam[i].checkPlayerInRange(this.playerTeam) !== null) {
                 console.log(`Player in range.`);
                 if(this.enemyTeam[i].canMove) {
-                    // Handle enemy movement
-                    if(this.enemyTeam[i].canAttack) {
-                        // Handle enemy attack
-                    }
+                   this.enemyTeam[i].makeEnemyMove(this);
+                   this.enemyTeam[i].canMove = false;
+                   this.enemyTeam[i].canAttack = false;
                 }
             } 
         }

@@ -69,7 +69,12 @@ class Ship {
                 }
             
                 this.transform = "translate(" + this.initialXCord + "px, " + this.initialYCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
-                document.querySelector(`#enemy-unit-${this.indexValue}`).style.transform = this.transform;
+
+                if(this.team === 'player') {
+                    document.querySelector(`#player-unit-${this.indexValue}`).style.transform = this.transform;
+                } else if(this.team === 'enemy') {
+                    document.querySelector(`#enemy-unit-${this.indexValue}`).style.transform = this.transform;
+                }
                 
                 console.log(this.transform);               
                 this.deathSpins--;
@@ -85,7 +90,12 @@ class Ship {
                 this.occupyingTile = null;
                 this.xCord = null;
                 this.yCord = null;
-                document.querySelector(`#enemy-unit-${this.indexValue}`).remove();
+
+                if(this.team === 'player') {
+                    document.querySelector(`#player-unit-${this.indexValue}`).remove();
+                } else if(this.team === 'enemy') {
+                    document.querySelector(`#enemy-unit-${this.indexValue}`).remove();
+                }
             }
         }, 250);
     }
@@ -251,4 +261,71 @@ class EnemyShip extends Ship {
 
         return lowestHealthPlayer;
     }
+
+    getPossibleMoveTiles(game, target) {
+        let targetTile = target.occupyingTile;
+        let totalRange = this.attackRange + this.move;
+        let adjacentTiles = game.getAdjacentTiles(targetTile);
+        let validMoves = [];
+
+        for(let i = 0; i < adjacentTiles.length; i++) {
+            if(adjacentTiles[i].xCord <= 240 && adjacentTiles[i].yCord <= 240) {
+                if(adjacentTiles[i].yCord >= -240 && adjacentTiles[i].yCord >= -240) {
+                    if((totalRange * 30) > Math.sqrt((this.xCord - adjacentTiles[i].xCord)^2 + (this.yCord - adjacentTiles[i].yCord)^2)) {
+                        if(adjacentTiles[i].occupiedBy !== null) {
+                            console.log(`This tile is not a possible move. (occupied)`);
+                        } else if(adjacentTiles[i].tileType === "asteroid") {
+                            console.log(`This tile is not a possible move. (asteroid)`);
+                        } else {
+                            validMoves.push(adjacentTiles[i]);
+                        }
+                    } else {
+                        console.log(`This tile is too far away.`);
+                    }
+                } else {
+                    console.log(`This tile is not a possible move. (not on grid)`);
+                }
+            }
+        }
+
+        if(validMoves.length !== 0) {
+            return validMoves;
+        } else {
+            console.log(`No valid moves`);
+            return validMoves;
+        }
+    }
+
+    makeEnemyMove(game) {
+        let target = this.checkPlayerInRange(game.playerTeam);
+        let possibleMoves = this.getPossibleMoveTiles(game, target);
+
+        if(possibleMoves.length !== 0) {
+            let move = possibleMoves[0];
+
+            let oldTile = game.getTileByLocation(this.occupyingTile.xCord, this.occupyingTile.yCord);
+            oldTile.occupiedBy = null;
+            oldTile.occupied = false;
+
+            this.occupyingTile = move;
+
+            this.xCord = move.xCord;
+            this.yCord = move.yCord;
+            this.initialXCord = move.xCord;
+            this.initalYCord = move.yCord;
+
+            this.occupyingTile.occupiedBy = this;
+            this.occupyingTile.occupied = true;
+
+            this.placeShip();
+
+            if(this.canAttack) {
+                this.shipAttack(target, game);
+                console.log(`Player Ship was attacked. ${target.health} remaining health.`)
+            }
+        } else {
+            console.log(`no possible moves`);
+        }
+    }
+    
 };
