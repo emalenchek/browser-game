@@ -27,7 +27,7 @@ class Game {
 
         adjacentTileLocations.push(tile.getAdjacentTileCords());
 
-        for(let i = 0; i < adjacentTileLocations.length; i++) {
+        for(let i = 0; i < adjacentTileLocations[0].length; i++) {
             adjacentTiles.push(this.getTileByLocation(adjacentTileLocations[0][i][0], adjacentTileLocations[0][i][1])); 
         }
 

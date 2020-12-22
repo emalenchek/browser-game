@@ -237,6 +237,7 @@ class EnemyShip extends Ship {
         this.initialXCord = x;
         this.initialYCord = y;
         this.health = 10;
+        this.attackRange = 1;
         this.orientation = "south";
         this.degreeOfOrientation = 180;
     }
@@ -270,7 +271,7 @@ class EnemyShip extends Ship {
 
         for(let i = 0; i < adjacentTiles.length; i++) {
             if(adjacentTiles[i].xCord <= 240 && adjacentTiles[i].yCord <= 240) {
-                if(adjacentTiles[i].yCord >= -240 && adjacentTiles[i].yCord >= -240) {
+                if(adjacentTiles[i].xCord >= -240 && adjacentTiles[i].yCord >= -240) {
                     if((totalRange * 30) > Math.sqrt(Math.pow(this.xCord - adjacentTiles[i].xCord, 2) + Math.pow(this.yCord - adjacentTiles[i].yCord, 2))) {
                         if(adjacentTiles[i].occupiedBy !== null) {
                             console.log(`This tile is not a possible move. (occupied)`);
@@ -299,20 +300,32 @@ class EnemyShip extends Ship {
     makeEnemyMove(game) {
         let target = this.checkPlayerInRange(game.playerTeam);
         let possibleMoves = this.getPossibleMoveTiles(game, target);
+        let closestMove = null;
+        let distanceClosestMove = 0;
 
         if(possibleMoves.length !== 0) {
-            let move = possibleMoves[0];
+            for(let i = 0; i < possibleMoves.length; i++) {
+                //get closest valid move
+                if(closestMove === null) {
+                    closestMove = possibleMoves[i];
+                    distanceClosestMove = Math.sqrt(Math.pow(possibleMoves[i].xCord - this.xCord, 2) + Math.pow(possibleMoves[i].xCord - this.xCord, 2));
+                }
+                else if(Math.sqrt(Math.pow(possibleMoves[i].xCord - this.xCord, 2) + Math.pow(possibleMoves[i].xCord - this.xCord, 2)) < distanceClosestMove) {
+                    closestMove = possibleMoves[i];
+                    distanceClosestMove = Math.sqrt(Math.pow(possibleMoves[i].xCord - this.xCord, 2) + Math.pow(possibleMoves[i].xCord - this.xCord, 2));
+                }
+            }
 
             let oldTile = game.getTileByLocation(this.occupyingTile.xCord, this.occupyingTile.yCord);
             oldTile.occupiedBy = null;
             oldTile.occupied = false;
 
-            this.occupyingTile = move;
+            this.occupyingTile = closestMove;
 
-            this.xCord = move.xCord;
-            this.yCord = move.yCord;
-            this.initialXCord = move.xCord;
-            this.initalYCord = move.yCord;
+            this.xCord = closestMove.xCord;
+            this.yCord = closestMove.yCord;
+            this.initialXCord = closestMove.xCord;
+            this.initalYCord = closestMove.yCord;
 
             this.occupyingTile.occupiedBy = this;
             this.occupyingTile.occupied = true;
