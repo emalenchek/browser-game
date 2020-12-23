@@ -107,18 +107,21 @@ class Game {
     }
 
     handleEnemyTurn() {
-        for(let i = 0; i < this.enemyTeam.length; i++) {
-            this.enemyTeam[i].canMove = true;
-            this.enemyTeam[i].canAttack = true;
-            if(this.enemyTeam[i].checkPlayerInRange(this.playerTeam) !== null) {
-                console.log(`Player in range.`);
-                if(this.enemyTeam[i].canMove) {
-                   this.enemyTeam[i].makeEnemyMove(this);
-                   this.enemyTeam[i].canMove = false;
-                   this.enemyTeam[i].canAttack = false;
-                }
-            } 
-        }
+            for(let i = 0; i < this.enemyTeam.length; i++) {
+                setTimeout(() => {
+                    this.enemyTeam[i].canMove = true;
+                    this.enemyTeam[i].canAttack = true;
+                    if(this.enemyTeam[i].checkPlayerInRange(this.playerTeam) !== null) {
+                        console.log(`Player in range.`);
+                        if(this.enemyTeam[i].canMove) {
+                        this.enemyTeam[i].makeEnemyMove(this);
+                        this.enemyTeam[i].canMove = false;
+                        this.enemyTeam[i].canAttack = false;
+                        }
+                    } 
+                }, 500);
+            }
+
     }
 
     checkEnemyTurnEnd() {
