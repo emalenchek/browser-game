@@ -46,7 +46,7 @@ class MapTile {
             newTile.className = "default-tile";
         }
         
-        parent.append(newTile);
+        this.parent.append(newTile);
     }
 
     setOccupied(ship) {

@@ -11,11 +11,6 @@ window.onload = () => {
     
     game.populateMap();
 
-    game.getTileByLocation(-210, -180).setTileAsteroid();
-    game.getTileByLocation(-90, 180).setTileAsteroid();
-    game.getTileByLocation(150, 120).setTileAsteroid();
-    game.getTileByLocation(-150, -150).setTileAsteroid();
-
     let newAsteroid1 = game.getTileByLocation(-210, -180);
     let newAsteroid2 = game.getTileByLocation(-90, 180);
     let newAsteroid3 = game.getTileByLocation(150, 120);
@@ -30,7 +25,8 @@ window.onload = () => {
 
     game.start(playerTeam, enemyTeam);
 
-    for(let i = 0; i < hazards; i++) {
+    for(let i = 0; i < hazards.length; i++) {
+        hazards[i].setTileAsteroid();
         hazards[i].setMapTile();
     }
 
