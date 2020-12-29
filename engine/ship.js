@@ -33,17 +33,33 @@ class Ship {
                 this.orientation = "north";
                 this.degreeOfOrientation = 0;
                 break;
+            case "northeast":
+                this.orientation = "northeast";
+                this.degreeOfOrientation = 45;
+                break;
             case "east":
                 this.orientation = "east";
                 this.degreeOfOrientation = 90;
+                break;
+            case "southeast":
+                this.orientation = "east";
+                this.degreeOfOrientation = 135;
                 break;
             case "south":
                 this.orientation = "south";
                 this.degreeOfOrientation = 180;
                 break;
+            case "southwest":
+                this.orientation = "south";
+                this.degreeOfOrientation = 225;
+                break;
             case "west":
                 this.orientation = "west";
                 this.degreeOfOrientation = 270;
+                break;
+            case "west":
+                this.orientation = "northwest";
+                this.degreeOfOrientation = 315;
                 break;
             default:
                 break;
