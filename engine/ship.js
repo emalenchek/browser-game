@@ -180,7 +180,41 @@ class Ship {
         }
     }
 
+    setAttackOrientation(target) {
+        let x = target.xCord;
+        let y = target.yCord;
+
+        if(this.xCord < x && this.yCord > y) {
+            this.orientation = "northwest"; // aim northwest
+        } else if(this.xCord > x && this.yCord > y) {
+            this.orientation = "northeast"; // aim northeast
+        } else if(this.xCord < x && this.yCord < y) {
+            this.orientation = "southeast"; // aim southeast
+        } else if(this.xCord > x && this.yCord < y) {
+            this.orientation = "southwest"; // aim southwest
+        } else if(this.xCord < x) {
+            this.orientation = "east"; // aim east 
+        } else if(this.xCord > x) {
+            this.orientation = "west"; // aim west
+        } else if(this.yCord > y) {
+            this.orientation = "north"; // aim north
+        } else if(this.yCord < y) {
+            this.orientation = "south"; // aim south
+        }
+
+        this.setOrientation(this.orientation); // update ship aim direction
+        this.transform = "translate(" + this.xCord + "px, " + this.yCord + "px) rotate(" + this.degreeOfOrientation + "deg)";
+
+        if(this.team === "player") {
+            document.querySelector(`#player-unit-${this.indexValue}`).style.transform = this.transform;
+        } else if(this.team === "enemy") {
+            document.querySelector(`#enemy-unit-${this.indexValue}`).style.transform = this.transform;
+        }
+    }
+
     shipAttack(target, game) {
+        this.setAttackOrientation(target);
+
         target.health -= this.attack;
         target.handleStatus(game);
         if(target.team === "enemy") {
