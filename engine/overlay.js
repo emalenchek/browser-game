@@ -46,7 +46,6 @@ class Overlay {
 
     clearTarget() {
         this.target = null;
-        this.data = {};
         this.position = '';
     }
 
