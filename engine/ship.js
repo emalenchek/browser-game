@@ -1,5 +1,6 @@
 class Ship {
     constructor() {
+        this.maxHealth = 50;
         this.health = 50;
         this.move = 5;
         this.attack = 10;
@@ -287,6 +288,7 @@ class EnemyShip extends Ship {
         this.initialXCord = x;
         this.initialYCord = y;
         this.health = 10;
+        this.maxHealth = 10;
         this.attackRange = 1;
         this.orientation = "south";
         this.degreeOfOrientation = 180;

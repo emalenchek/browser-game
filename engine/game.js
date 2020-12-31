@@ -11,6 +11,14 @@ class Game {
         this.mapCols = 15;
         this.map = [];
         this.mapTileSize = 30;
+        this.overlay = new Overlay();
+    }
+
+    handleOverlay(cursor) {
+        this.overlay.updateTarget(cursor.intersectingWith);
+        this.overlay.updatePosition();
+        this.overlay.populateElementData();
+        this.overlay.setElement();
     }
 
     getTileByLocation(x, y) {

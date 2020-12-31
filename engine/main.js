@@ -107,6 +107,12 @@ window.onload = () => {
                     }
                 }
 
+                for(let i = 0; i < game.playerTeam.length; i++) {
+                    game.playerTeam[i].checkIntersect(newCursor);
+                }
+
+                game.handleOverlay(newCursor);
+
                 break;
             case "A":
             case "a":
@@ -151,6 +157,12 @@ window.onload = () => {
                         hazards[i].intersecting = false;
                     }
                 }
+
+                for(let i = 0; i < game.playerTeam.length; i++) {
+                    game.playerTeam[i].checkIntersect(newCursor);
+                }
+
+                game.handleOverlay(newCursor);
 
                 break;
             case "S":
@@ -197,6 +209,12 @@ window.onload = () => {
                     }
                 }
 
+                for(let i = 0; i < game.playerTeam.length; i++) {
+                    game.playerTeam[i].checkIntersect(newCursor);
+                }
+
+                game.handleOverlay(newCursor);
+
                 break;
             case "D":
             case "d":
@@ -241,6 +259,11 @@ window.onload = () => {
                         hazards[i].intersecting = false;
                     }
                 }
+
+                for(let i = 0; i < game.playerTeam.length; i++) {
+                    game.playerTeam[i].checkIntersect(newCursor);
+                }
+                game.handleOverlay(newCursor);
 
                 break;
             case "Z":

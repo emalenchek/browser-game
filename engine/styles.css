@@ -124,10 +124,10 @@ body {
 }
 
 .overlay {
-    display: flex;
+    display: none;
     justify-content: space-around;
     align-items: center;
-    position: relative;
+    position: absolute;
     width: 200px;
     height: 100px;
     background: white;
@@ -135,26 +135,37 @@ body {
   
 .overlay-data {
     display: flex;
-    width: 100px;
-    height: 75px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50%;
+    height: 100%;
 }
 
 .top-left {
     top: 0px;
+    bottom: unset;
     left: 0px;
+    right: unset;
 }
 
 .top-right {
     top: 0px;
     right: 0px;
+    left: unset;
+    bottom: unset;
 }
 
 .bottom-left {
     bottom: 0px;
     left: 0px;
+    top: unset;
+    right: unset;
 }
 
 .bottom-right {
     bottom: 0px;
     right: 0px;
+    top: unset;
+    left: unset;
 }
