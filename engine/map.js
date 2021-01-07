@@ -42,6 +42,8 @@ class MapTile {
 
         if(this.tileType === 'asteroid') {
             newTile.className = "asteroid";
+        } else if(this.tileType === 'wormhole') {
+            newTile.className = "wormhole";
         } else if(this.tileType === 'default') {
             newTile.className = "default-tile";
         }
@@ -63,6 +65,11 @@ class MapTile {
         this.tileType = "asteroid";
         this.background = "url('media/spacepixels-0.2.0/asteroid_grey.png')";
     }
+
+    setTileWormhole() {
+        this.tileType = "wormhole";
+        this.background = "url('media/custom/tiles/wormhole.png')";
+    }
 }
 
 class AsteroidTile extends MapTile {
@@ -72,6 +79,16 @@ class AsteroidTile extends MapTile {
         this.yCord = y;
         this.tileType = 'asteroid';
         this.background = "url('media/spacepixels-0.2.0/asteroid_grey.png')";
+    }
+}
+
+class WormholeTile extends MapTile {
+    constructor(x, y) {
+        super();
+        this.xCord = x;
+        this.yCord = y;
+        this.tileType = 'wormhole';
+        this.background = "url('media/custom/tiles/wormhole.png')";
     }
 }
 

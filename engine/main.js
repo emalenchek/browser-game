@@ -16,18 +16,26 @@ window.onload = () => {
     let newAsteroid3 = game.getTileByLocation(150, 120);
     let newAsteroid4 = game.getTileByLocation(-150, -150);
 
+    let wormhole = game.getTileByLocation(60, 150);
+
     let playerTeam = [newPlayer, newPlayer1];
     let enemyTeam = [newEnemy];
 
     game.setOccupiedTiles(playerTeam, enemyTeam);
 
     let hazards = [newAsteroid1, newAsteroid2, newAsteroid3, newAsteroid4];
+    let wormholes = [wormhole];
 
     game.start(playerTeam, enemyTeam);
 
     for(let i = 0; i < hazards.length; i++) {
         hazards[i].setTileAsteroid();
         hazards[i].setMapTile();
+    }
+
+    for(let i = 0; i < wormholes.length; i++) {
+        wormholes[i].setTileWormhole();
+        wormholes[i].setMapTile();
     }
 
 

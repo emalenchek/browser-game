@@ -111,6 +111,14 @@ body {
     background-image: url('media/spacepixels-0.2.0/asteroid_grey_tiny.png');
 }
 
+.wormhole {
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('media/custom/tiles/wormhole.png');
+}
+
 .move-range {
     display: none;
     position: absolute;
