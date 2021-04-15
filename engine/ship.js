@@ -166,7 +166,9 @@ class Ship {
                     A* implementation: Going to need to check each adjacent square 
                     to determine which square will get the user closest to the 
                     goal square. Should probabaly build a calculateDistance helper
-                    method (since I will be using many times).
+                    method (since I will be using many times). I then update the 
+                    ship's position to the new square, and decrement the "moves left".
+                    I repeat the process (accounting for untraversible terrain).
                     
                     Ties will need to be handled (maybe always prefering right->up->left->down).
                 */
