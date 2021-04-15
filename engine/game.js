@@ -7,8 +7,8 @@ class Game {
         this.enemyTeamSize = 0;
         this.playerTurn = false;
         this.enemyTurn = false;
-        this.mapRows = 15;
-        this.mapCols = 15;
+        this.mapRows = 17;
+        this.mapCols = 17;
         this.map = [];
         this.mapTileSize = 30;
         this.overlay = new Overlay();
@@ -52,6 +52,7 @@ class Game {
                 temp.setMapTile;
             }
         }
+        console.log(this.map);
     }
 
     start(playerTeam, enemyTeam) {
