@@ -201,7 +201,7 @@ class Ship {
                         let closestTile = null;
                         for(let i=0; i < adjacentTiles.length; i++) {
                             // check to see if adjacent tile is an asteroid
-                            if(adjacentTiles[i].tileType !== 'asteroid' || adjacentTiles.tileType !== 'ship') {
+                            if(adjacentTiles[i].tileType !== 'asteroid') {
                                 if(closestTile === null) {
                                     closestTile = adjacentTiles[i];
                                 }
