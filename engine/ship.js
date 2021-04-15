@@ -20,6 +20,7 @@ class Ship {
         this.canMove = false;
         this.canAttack = false;
         this.occupyingTile = null;
+        this.currentPath = [];
     }
 
     handleStatus(game) {
@@ -181,24 +182,64 @@ class Ship {
                     would be to prefer to prioritize movement in the y-direction first (decreasing deltaY before deltaX)).                    
                 */
                 if(this.canMove === true) {
-                    // old tile no longer occupied
-                    let oldTile = game.getTileByLocation(this.xCord, this.yCord);
-                    oldTile.setOccupied(null);
-                    this.occupyingTile = null;
+                    let movesLeft = this.move;
+                    let goalReached = false;
+                    while(movesLeft !== 0 && goalReached === false) {
+                        let goalX = cursor.xCord;
+                        let goalY = cursor.yCord;
+                        let currentX = this.xCord;
+                        let currentY = this.yCord;
 
-                    // updates ship coordinates and places ship
-                    this.initialXCord = cursor.xCord;
-                    this.xCord = cursor.xCord;
-                    this.initialYCord = cursor.yCord;
-                    this.yCord = cursor.yCord;
-                    this.placeShip();
+                        // get current distance from goal
+                        let currentGoalDistance = getEuclideanDistance(goalX-currentX, goalY-currentY);
+                        console.log("Current Distance: " + currentGoalDistance);
+
+                        // get adjacent tiles
+                        let adjacentTiles = game.getAdjacentTiles(game.getTileByLocation(currentX, currentY));
+
+                        // get adjacent tile with minimum distance from goal
+                        let closestTile = null;
+                        for(let i=0; i < adjacentTiles.length; i++) {
+                            // check to see if adjacent tile is an asteroid
+                            if(adjacentTiles[i].tileType !== 'asteroid') {
+                                if(closestTile === null) {
+                                    closestTile = adjacentTiles[i];
+                                }
+
+                                if(getEuclideanDistance(goalX-closestTile.xCord, goalY-closestTile.yCord) > getEuclideanDistance(goalX-adjacentTiles[i].xCord, goalY-adjacentTiles[i].yCord)) {
+                                    closestTile = adjacentTiles[i];
+                                }
+                            }
+                        }
+                        console.log(closestTile);
+
+                        // old tile no longer occupied (may need to add a currentPath member variable that stores path tiles)
+                        let oldTile = game.getTileByLocation(this.xCord, this.yCord);
+                        this.currentPath.push(oldTile);
+                        oldTile.setOccupied = null;
+                        this.occupyingTile = null;
+
+                        // update ship coordinates and place ship
+                        this.initialXCord = closestTile.xCord;
+                        this.xCord = closestTile.xCord;
+                        this.initialYCord = closestTile.yCord;
+                        this.yCord = closestTile.yCord;
+                        this.placeShip();
+
+                        //new tile is occupied
+                        let newTile = game.getTileByLocation(this.xCord, this.yCord);
+                        newTile.setOccupied(this);
+                        this.occupyingTile = newTile;
+
+                        if(this.xCord === goalX && this.yCord === goalY) {
+                            goalReached = true;
+                        }
+
+                        movesLeft--;
+                        // sleep(200);
+                    }
+
                     this.canMove = false;
-
-                    // new tile is occupied
-                    let newTile = game.getTileByLocation(this.xCord, this.yCord);
-                    newTile.setOccupied(this);
-                    this.occupyingTile = newTile;
-
                     console.log(`Player occupying tile: ${this.occupyingTile}`);
                 } else {
                     console.log(`This unit already moved or can not move.`);
