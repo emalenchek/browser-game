@@ -165,12 +165,20 @@ class Ship {
                 /* 
                     A* implementation: Going to need to check each adjacent square 
                     to determine which square will get the user closest to the 
-                    goal square. Should probabaly build a calculateDistance helper
+                    goal square. Should probably build a calculateDistance helper
                     method (since I will be using many times). I then update the 
                     ship's position to the new square, and decrement the "moves left".
                     I repeat the process (accounting for untraversible terrain).
+
+                    Heuristic: Prefer moves that have closest magnitude to the direct path/
+                    correct direction of the goal node. If there is a tie, prioritze movement
+                    in the Y direction. 
                     
-                    Ties will need to be handled (maybe always prefering right->up->left->down).
+                    (For example: if deltaX=90 from startNode->goalNode && deltaY=30 from
+                    startNode->goalNode, the adjacent nodes that are deltaX=90,deltaY=0/deltaX=60,deltaY=30 
+                    will be preferred over the adjacent nodes that are deltaX=90,deltaY=60/deltaX=120,deltaY=30.
+                    I then feel that the best way to handle nodes adjacent of startNode with similar magnitudes
+                    would be to prefer to prioritize movement in the y-direction first (decreasing deltaY before deltaX)).                    
                 */
                 if(this.canMove === true) {
                     // old tile no longer occupied
