@@ -86,6 +86,7 @@ class Game {
             let temp = this.getTileByLocation(x, y);
             playerTeam[i].occupyingTile = temp;
             temp.setOccupied(playerTeam[i]);
+            temp.tileType = 'ship';
         }
 
         for(let i = 0; i < enemyTeam.length; i++) {
@@ -94,6 +95,7 @@ class Game {
             let temp = this.getTileByLocation(x, y);
             enemyTeam[i].occupyingTile = temp;
             temp.setOccupied(enemyTeam[i]);
+            temp.tileType = 'ship';
         }
     }
 

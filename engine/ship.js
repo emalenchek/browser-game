@@ -201,7 +201,7 @@ class Ship {
                         let closestTile = null;
                         for(let i=0; i < adjacentTiles.length; i++) {
                             // check to see if adjacent tile is an asteroid
-                            if(adjacentTiles[i].tileType !== 'asteroid') {
+                            if(adjacentTiles[i].tileType !== 'asteroid' || adjacentTiles.tileType !== 'ship') {
                                 if(closestTile === null) {
                                     closestTile = adjacentTiles[i];
                                 }
@@ -217,6 +217,7 @@ class Ship {
                         let oldTile = game.getTileByLocation(this.xCord, this.yCord);
                         this.currentPath.push(oldTile);
                         oldTile.setOccupied = null;
+                        oldTile.tileType = 'default';
                         this.occupyingTile = null;
 
                         // update ship coordinates and place ship
@@ -228,8 +229,9 @@ class Ship {
 
                         //new tile is occupied
                         let newTile = game.getTileByLocation(this.xCord, this.yCord);
-                        newTile.setOccupied(this);
+                        newTile.setOccupied = this;
                         this.occupyingTile = newTile;
+                        this.occupyingTile.tileType = 'ship';
 
                         if(this.xCord === goalX && this.yCord === goalY) {
                             goalReached = true;
