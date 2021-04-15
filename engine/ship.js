@@ -162,6 +162,14 @@ class Ship {
             } else if(cursor.intersectingWithTile !== null && cursor.intersectingWithTile.tileType === 'asteroid') {
                 console.log(`This coordinate is occupied by a(n) ${cursor.intersectingWithTile.tileType}, you can not move here.`)
             } else {
+                /* 
+                    A* implementation: Going to need to check each adjacent square 
+                    to determine which square will get the user closest to the 
+                    goal square. Should probabaly build a calculateDistance helper
+                    method (since I will be using many times).
+                    
+                    Ties will need to be handled (maybe always prefering right->up->left->down).
+                */
                 if(this.canMove === true) {
                     // old tile no longer occupied
                     let oldTile = game.getTileByLocation(this.xCord, this.yCord);
