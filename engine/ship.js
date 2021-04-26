@@ -100,7 +100,7 @@ class Ship {
             } else {
                 // map tile no longer occupied
                 let tile = game.getTileByLocation(this.xCord, this.yCord);
-                tile.setOccupied(null);
+                tile.setOccupied = null;
 
                 // handle ship destroyed
                 this.destroyed = true;           
@@ -201,7 +201,7 @@ class Ship {
                         let closestTile = null;
                         for(let i=0; i < adjacentTiles.length; i++) {
                             // check to see if adjacent tile is an asteroid
-                            if(adjacentTiles[i].tileType !== 'asteroid') {
+                            if(adjacentTiles[i].tileType !== 'asteroid' && adjacentTiles[i].tileType !== 'ship') {
                                 if(closestTile === null) {
                                     closestTile = adjacentTiles[i];
                                 }
@@ -214,30 +214,32 @@ class Ship {
                         console.log(closestTile);
 
                         // old tile no longer occupied (may need to add a currentPath member variable that stores path tiles)
-                        let oldTile = game.getTileByLocation(this.xCord, this.yCord);
-                        this.currentPath.push(oldTile);
-                        oldTile.setOccupied = null;
-                        oldTile.tileType = 'default';
-                        this.occupyingTile = null;
-
-                        // update ship coordinates and place ship
-                        this.initialXCord = closestTile.xCord;
-                        this.xCord = closestTile.xCord;
-                        this.initialYCord = closestTile.yCord;
-                        this.yCord = closestTile.yCord;
-                        this.placeShip();
-
-                        //new tile is occupied
-                        let newTile = game.getTileByLocation(this.xCord, this.yCord);
-                        newTile.setOccupied = this;
-                        this.occupyingTile = newTile;
-                        this.occupyingTile.tileType = 'ship';
-
-                        if(this.xCord === goalX && this.yCord === goalY) {
-                            goalReached = true;
+                        if(closestTile !== null) {
+                            let oldTile = game.getTileByLocation(this.xCord, this.yCord);
+                            this.currentPath.push(oldTile);
+                            oldTile.setOccupied = null;
+                            oldTile.tileType = 'default';
+                            this.occupyingTile = null;
+    
+                            // update ship coordinates and place ship
+                            this.initialXCord = closestTile.xCord;
+                            this.xCord = closestTile.xCord;
+                            this.initialYCord = closestTile.yCord;
+                            this.yCord = closestTile.yCord;
+                            this.placeShip();
+    
+                            //new tile is occupied
+                            let newTile = game.getTileByLocation(this.xCord, this.yCord);
+                            newTile.setOccupied = this;
+                            this.occupyingTile = newTile;
+                            this.occupyingTile.tileType = 'ship';
+    
+                            if(this.xCord === goalX && this.yCord === goalY) {
+                                goalReached = true;
+                            }
+    
+                            movesLeft--;
                         }
-
-                        movesLeft--;
                         // sleep(200);
                     }
 
@@ -383,13 +385,15 @@ class EnemyShip extends Ship {
         let validMoves = [];
 
         for(let i = 0; i < adjacentTiles.length; i++) {
-            if(adjacentTiles[i].xCord <= 240 && adjacentTiles[i].yCord <= 240) {
-                if(adjacentTiles[i].xCord >= -240 && adjacentTiles[i].yCord >= -240) {
+            if(adjacentTiles[i].xCord <= 270 && adjacentTiles[i].yCord <= 270) {
+                if(adjacentTiles[i].xCord >= -270 && adjacentTiles[i].yCord >= -270) {
                     if((totalRange * 30) > Math.sqrt(Math.pow(this.xCord - adjacentTiles[i].xCord, 2) + Math.pow(this.yCord - adjacentTiles[i].yCord, 2))) {
                         if(adjacentTiles[i].occupiedBy !== null) {
                             console.log(`This tile is not a possible move. (occupied)`);
                         } else if(adjacentTiles[i].tileType === "asteroid") {
                             console.log(`This tile is not a possible move. (asteroid)`);
+                        } else if(adjacentTiles[i].tileType === "ship") {
+                            console.log('There is a ship occupying this space. Not a possible move (ship).');
                         } else {
                             validMoves.push(adjacentTiles[i]);
                         }
@@ -411,46 +415,77 @@ class EnemyShip extends Ship {
     }
 
     makeEnemyMove(game) {
-        let target = this.checkPlayerInRange(game.playerTeam);
-        let possibleMoves = this.getPossibleMoveTiles(game, target);
-        let closestMove = null;
-        let distanceClosestMove = 0;
+        while(this.canMove === true) {
+                    // returns the lowest health target ship in range
+            let target = this.checkPlayerInRange(game.playerTeam);
+            let movesLeft = this.move;
+            let goalReached = false;
 
-        if(possibleMoves.length !== 0) {
-            for(let i = 0; i < possibleMoves.length; i++) {
-                //get closest valid move
-                if(closestMove === null) {
-                    closestMove = possibleMoves[i];
-                    distanceClosestMove = Math.sqrt(Math.pow(possibleMoves[i].xCord - this.xCord, 2) + Math.pow(possibleMoves[i].xCord - this.xCord, 2));
+            while(movesLeft !== 0 && goalReached === false) {
+                let goalX = target.xCord;
+                let goalY = target.yCord;
+                let currentX = this.xCord;
+                let currentY = this.yCord;
+
+                // get current distance from goal
+                let currentGoalDistance = getManhattanDistance(goalX-currentX, goalY-currentY);
+                console.log(`Current Distance: ${currentGoalDistance}`);
+
+                //gets adjacent tiles from current location of ship
+                let adjacentTiles = game.getAdjacentTiles(game.getTileByLocation(currentX, currentY));
+
+                // get traversable adjacent tile with minimum distance from goal
+                let closestTile = null;
+                for(let i = 0; i < adjacentTiles.length; i++) {
+                    // check to see if adjacent tile is traversable
+                    if(adjacentTiles[i].tileType !== 'asteroid' && adjacentTiles[i].tileType !== 'ship') {
+                        if(closestTile === null) {
+                            closestTile = adjacentTiles[i];
+                        }
+
+                        if(getManhattanDistance(goalX - closestTile.xCord, goalY - closestTile.yCord) > getManhattanDistance(goalX - adjacentTiles[i].xCord, goalY - adjacentTiles[i].yCord)) {
+                            closestTile = adjacentTiles[i];
+                        }
+                    }
                 }
-                else if(Math.sqrt(Math.pow(possibleMoves[i].xCord - this.xCord, 2) + Math.pow(possibleMoves[i].xCord - this.xCord, 2)) < distanceClosestMove) {
-                    closestMove = possibleMoves[i];
-                    distanceClosestMove = Math.sqrt(Math.pow(possibleMoves[i].xCord - this.xCord, 2) + Math.pow(possibleMoves[i].xCord - this.xCord, 2));
+
+                if(closestTile !== null) {
+                    let oldTile = game.getTileByLocation(this.xCord, this.yCord);
+                    this.currentPath.push(oldTile);
+                    oldTile.setOccupied = null;
+                    oldTile.tileType = 'default';
+                    this.occupyingTile = null;
+
+                    // update ship coordinates and place ship
+                    this.initialXCord = closestTile.xCord;
+                    this.xCord = closestTile.xCord;
+                    this.initialYCord = closestTile.yCord;
+                    this.yCord = closestTile.yCord;
+                    this.placeShip();
+
+                    
+                    if(this.canAttack && ((getManhattanDistance(goalX-this.xCord, goalY-this.yCord) / 30) <= this.attackRange)) {
+                        this.shipAttack(target, game);
+                        console.log(`Player Ship was attacked. ${target.health} remaining health.`);
+                        this.canMove = false;
+                    }
+
+                    //new tile is occupied
+                    let newTile = game.getTileByLocation(this.xCord, this.yCord);
+                    newTile.setOccupied = this;
+                    this.occupyingTile = newTile;
+                    this.occupyingTile.tileType = 'ship';
+
+                    if(this.xCord === goalX && this.yCord === goalY) {
+                        goalReached = true;
+                    }
+
+                    movesLeft--; 
                 }
             }
 
-            let oldTile = game.getTileByLocation(this.occupyingTile.xCord, this.occupyingTile.yCord);
-            oldTile.occupiedBy = null;
-            oldTile.occupied = false;
-
-            this.occupyingTile = closestMove;
-
-            this.xCord = closestMove.xCord;
-            this.yCord = closestMove.yCord;
-            this.initialXCord = closestMove.xCord;
-            this.initalYCord = closestMove.yCord;
-
-            this.occupyingTile.occupiedBy = this;
-            this.occupyingTile.occupied = true;
-
-            this.placeShip();
-
-            if(this.canAttack) {
-                this.shipAttack(target, game);
-                console.log(`Player Ship was attacked. ${target.health} remaining health.`)
-            }
-        } else {
-            console.log(`no possible moves`);
+            this.canMove = false;
+            console.log(`Enemy occupying tile: ${this.occupyingTile}`);
         }
     }
     

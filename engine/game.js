@@ -45,8 +45,8 @@ class Game {
     populateMap() {
         for(let i = 0; i < this.mapRows; i++) {
             for(let j = 0; j < this.mapCols; j++) {
-                let x = (-240 + (i * this.mapTileSize));
-                let y = (-240 + (j * this.mapTileSize));
+                let x = (-270 + (i * this.mapTileSize));
+                let y = (-270 + (j * this.mapTileSize));
                 let temp = new MapTile(x, y);
                 this.map.push(temp);
                 temp.setMapTile;
