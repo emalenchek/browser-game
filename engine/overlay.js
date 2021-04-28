@@ -75,8 +75,6 @@ class Overlay {
                 this.position = 'bottom-right';
                 this.cssClass = this.position;
             }
-        } else {
-            console.log('There is no overlay target.');
         }
     }
 }

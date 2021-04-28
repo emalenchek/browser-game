@@ -94,7 +94,6 @@ class Ship {
                     document.querySelector(`#enemy-unit-${this.indexValue}`).style.transform = this.transform;
                 }
                 
-                console.log(this.transform);               
                 this.deathSpins--;
                 this.destroyShip(game); 
             } else {
@@ -147,7 +146,6 @@ class Ship {
         if((this.move * 30) >= Math.sqrt(Math.pow((this.initialXCord - cursor.xCord), 2) + Math.pow((this.initialYCord - cursor.yCord), 2))) {
             // if target ship occupies square 
             if(cursor.intersectingWith !== null) {
-                console.log(cursor.intersectingWith);
                 if(cursor.intersectingWith.team === 'enemy') {
                     console.log(`This coordinate is occupied by an enemy, move within ${this.attackRange} spaces to attack.`);
                     // if target ship is within range attack target
@@ -191,7 +189,7 @@ class Ship {
                         let currentY = this.yCord;
 
                         // get current distance from goal
-                        let currentGoalDistance = getEuclideanDistance(goalX-currentX, goalY-currentY);
+                        let currentGoalDistance = getManhattanDistance(goalX-currentX, goalY-currentY);
                         console.log("Current Distance: " + currentGoalDistance);
 
                         // get adjacent tiles
@@ -206,7 +204,7 @@ class Ship {
                                     closestTile = adjacentTiles[i];
                                 }
 
-                                if(getEuclideanDistance(goalX-closestTile.xCord, goalY-closestTile.yCord) > getEuclideanDistance(goalX-adjacentTiles[i].xCord, goalY-adjacentTiles[i].yCord)) {
+                                if(getManhattanDistance(goalX-closestTile.xCord, goalY-closestTile.yCord) > getManhattanDistance(goalX-adjacentTiles[i].xCord, goalY-adjacentTiles[i].yCord)) {
                                     closestTile = adjacentTiles[i];
                                 }
                             }
@@ -461,6 +459,7 @@ class EnemyShip extends Ship {
                     this.xCord = closestTile.xCord;
                     this.initialYCord = closestTile.yCord;
                     this.yCord = closestTile.yCord;
+                    sleep(200);
                     this.placeShip();
 
                     
