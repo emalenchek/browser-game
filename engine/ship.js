@@ -476,7 +476,10 @@ class EnemyShip extends Ship {
                     this.occupyingTile = newTile;
                     this.occupyingTile.tileType = 'ship';
 
-                    if(this.xCord === goalX && this.yCord === goalY) {
+                    if(this.xCord === (goalX + 30) && this.yCord === goalY ||
+                        this.xCord === (goalX - 30) && this.yCord === goalY ||
+                        this.xCord === goalX && this.yCord === (goalY + 30) ||
+                        this.xCord === goalY && this.yCord === (goalY - 30)) {
                         goalReached = true;
                     }
 
