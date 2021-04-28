@@ -54,7 +54,7 @@ class Overlay {
             if(this.target.xCord >= 0) {
                 if(this.target.yCord >= 0) {
                     // cursor in bottom right
-                    this.position = 'bottom-right';
+                    this.position = 'top-left';
                     this.cssClass = this.position;
                 } else {
                     // cursor in top right
@@ -68,7 +68,7 @@ class Overlay {
                     this.cssClass = this.position;
                 } else {
                     // cursor in top left
-                    this.position = 'top-left';
+                    this.position = 'bottom-right';
                     this.cssClass = this.position;
                 }
             } else {

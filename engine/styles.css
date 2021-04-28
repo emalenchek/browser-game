@@ -139,6 +139,7 @@ body {
     width: 200px;
     height: 100px;
     background: white;
+    z-index: 5;
 }
   
 .overlay-data {
